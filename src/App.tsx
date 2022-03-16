@@ -1,3 +1,4 @@
+import React from "react";
 import './style.css';
 import './assets/iconfont/iconfont.css';
 
