@@ -1,12 +1,17 @@
-import React from "react";
+import React from 'react';
+import {renderRoutes} from "react-router-config";
+import {HashRouter} from "react-router-dom";
+
 import './style.css';
 import './assets/iconfont/iconfont.css';
 
+import routes from "./routes";
+
 function App() {
   return (
-    <div className="App">
-      <i className="iconfont">&#xe62b;</i>
-    </div>
+    <HashRouter>
+      {renderRoutes(routes)}
+    </HashRouter>
   );
 }
 
