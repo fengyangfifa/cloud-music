@@ -1,0 +1,14 @@
+{
+  "extends": [
+    "react-app",
+    "react-app/jest"
+  ],
+  "rules": {
+    "semi": "error",
+    "quotes": ["error", "double"],
+    "strict": "error",
+    "eqeqeq": ["error", "always"],
+    "eol-last": "error",
+    "max-len": ["error", {"code": 100}]
+  }
+}

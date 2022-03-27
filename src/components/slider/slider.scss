@@ -1,0 +1,39 @@
+@import "../../assets/normal";
+
+.slider {
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  background: white;
+
+  &:before {
+    position: absolute;
+    content: "";
+    top: -300px;
+    height: 400px;
+    width: 100%;
+    background: $theme-color;
+  }
+
+  &-container {
+    position: relative;
+    width: 98%;
+    height: 160px;
+    overflow: hidden;
+    margin: auto;
+    border-radius: 6px;
+
+    .slider-nav {
+      position: absolute;
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .swiper-pagination-bullet-active {
+      background: $theme-color;
+    }
+  }
+}

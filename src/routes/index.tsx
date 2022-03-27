@@ -16,7 +16,7 @@ const routes = [
         path: "/",
         exact: true,
         render: () => {
-          return <Redirect to={"/recommend"}/>
+          return <Redirect to={"/recommend"}/>;
         }
       },
       {
@@ -33,6 +33,6 @@ const routes = [
       }
     ]
   }
-]
+];
 
 export default routes;
