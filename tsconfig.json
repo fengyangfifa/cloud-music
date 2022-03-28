@@ -10,6 +10,10 @@
     "noImplicitAny": true,
     "strict": true,
     "moduleResolution": "node",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"] // 配置@/* 指向 src/*，避免 error
+    },
     "lib": [
       "DOM",
       "ESNext"
