@@ -18,6 +18,7 @@
     "@types/react-router-config": "^5.0.6",
     "@types/react-router-dom": "^5.3.3",
     "@types/swiper": "^5.4.3",
+    "axios": "^0.26.1",
     "babel-jest": "^27.4.2",
     "babel-loader": "^8.2.3",
     "babel-plugin-named-asset-import": "^0.3.8",

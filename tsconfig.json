@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
+    "module": "ESNext",
     "target": "es5",
     "sourceMap": true,
     "jsx": "react",
@@ -8,7 +8,12 @@
     "allowSyntheticDefaultImports": true,
     "allowJs": true,
     "noImplicitAny": true,
-    "strict": true
+    "strict": true,
+    "moduleResolution": "node",
+    "lib": [
+      "DOM",
+      "ESNext"
+    ]
   },
   "exclude": [
     "node_modules"
