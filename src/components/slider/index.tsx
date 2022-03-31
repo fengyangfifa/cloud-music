@@ -2,10 +2,13 @@ import React, {useState, useEffect} from "react";
 import Swiper from "swiper";
 import "swiper/dist/css/swiper.css";
 
+import {
+  BannerList
+} from "@/types";
 import "./slider.scss";
 
 interface SliderProps {
-  bannerList: Array<Record<"imageUrl", string>>
+  bannerList: BannerList
 }
 
 function Slider(props: SliderProps) {

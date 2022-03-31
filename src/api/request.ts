@@ -1,9 +1,24 @@
 import {axiosInstance} from "./config";
+import {BannerList, RecommendList} from "@/types";
+import {GetKeyType} from "@/utils/";
+
+
+interface ResponseTypes {
+  "/banner": {
+    banners: BannerList
+  };
+  "/personalized": {
+    result: RecommendList
+  };
+  [key: string]: unknown;
+}
 
 export const getBannerRequest = () => {
-  return axiosInstance.get("/banner");
+  const url = "/banner";
+  return axiosInstance.get<GetKeyType<typeof url, ResponseTypes>>(url);
 };
 
 export const getRecommendListRequest = () => {
-  return axiosInstance.get("/personalized");
+  const url = "/personalized";
+  return axiosInstance.get<GetKeyType<typeof url, ResponseTypes>>(url);
 };

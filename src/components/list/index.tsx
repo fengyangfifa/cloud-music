@@ -2,17 +2,13 @@ import React from "react";
 import clsx from "clsx";
 
 import style from "./list.module.scss";
-import {getCount} from "../../api/utils";
-
-interface ListItemProps {
-  id: number,
-  picUrl: string,
-  playCount: number,
-  name: string
-}
+import {getCount} from "@/api/utils";
+import {
+  RecommendList as RecommendListProps
+} from "@/types";
 
 interface ListProps {
-  recommendList: Array<ListItemProps>
+  recommendList: RecommendListProps
 }
 
 function RecommendList(props: ListProps) {
