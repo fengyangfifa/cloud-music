@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { forceCheck } from "react-lazyload";
+
 import Slider from "../../components/slider";
 import RecommendList from "../../components/list";
 import Scroll from "../../baseUI/scroll";
-
 import { getBannerList, getRecommendList } from "./store/actionCreators";
 import { RootState } from "@/store";
 
@@ -23,7 +24,7 @@ function Recommend() {
 
   return (
     <div className={style["content"]}>
-      <Scroll>
+      <Scroll onScroll={forceCheck}>
         <div>
           <Slider bannerList={bannerList} />
           <RecommendList recommendList={recommendList} />

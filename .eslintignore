@@ -1,5 +1,8 @@
 # 忽略 config 目录下的所有 js 文件
 config/**/*.js
+
 scripts/
 node_modules/
+
+# 忽略 package.json，避免 git commit 时 webstorm 卡死
 package.json
