@@ -1,14 +1,11 @@
-import React, {useEffect} from "react";
-import {useSelector, useDispatch} from "react-redux";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import Slider from "../../components/slider";
 import RecommendList from "../../components/list";
 import Scroll from "../../baseUI/scroll";
 
-import {
-  getBannerList,
-  getRecommendList
-} from "./store/actionCreators";
-import {RootState} from "@/store";
+import { getBannerList, getRecommendList } from "./store/actionCreators";
+import { RootState } from "@/store";
 
 import style from "./recommend.module.scss";
 
@@ -20,7 +17,7 @@ function Recommend() {
     dispatch(getRecommendList());
   }, [dispatch]);
 
-  const {bannerList, recommendList} = useSelector((state: RootState) => {
+  const { bannerList, recommendList } = useSelector((state: RootState) => {
     return state.recommend;
   });
 
@@ -28,8 +25,8 @@ function Recommend() {
     <div className={style["content"]}>
       <Scroll>
         <div>
-          <Slider bannerList={bannerList}/>
-          <RecommendList recommendList={recommendList}/>
+          <Slider bannerList={bannerList} />
+          <RecommendList recommendList={recommendList} />
         </div>
       </Scroll>
     </div>

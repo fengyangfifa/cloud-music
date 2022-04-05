@@ -1,11 +1,11 @@
 import React from "react";
-import {renderRoutes, RouteConfig} from "react-router-config";
-import {NavLink} from "react-router-dom";
+import { renderRoutes, RouteConfig } from "react-router-config";
+import { NavLink } from "react-router-dom";
 
 import style from "./home.module.scss";
 
 function Home(props: RouteConfig) {
-  const {route} = props;
+  const { route } = props;
 
   return (
     <div className="Home">
@@ -16,13 +16,19 @@ function Home(props: RouteConfig) {
       </div>
       <div className={style.tab}>
         <NavLink to="/recommend" activeClassName={style.selected}>
-          <div className={style["tab-item"]}><span> 推荐 </span></div>
+          <div className={style["tab-item"]}>
+            <span> 推荐 </span>
+          </div>
         </NavLink>
         <NavLink to="/singers" activeClassName={style.selected}>
-          <div className={style["tab-item"]}><span> 歌手 </span></div>
+          <div className={style["tab-item"]}>
+            <span> 歌手 </span>
+          </div>
         </NavLink>
         <NavLink to="/rank" activeClassName={style.selected}>
-          <div className={style["tab-item"]}><span> 排行榜 </span></div>
+          <div className={style["tab-item"]}>
+            <span> 排行榜 </span>
+          </div>
         </NavLink>
       </div>
       {renderRoutes(route.routes)}

@@ -1,14 +1,13 @@
-import {axiosInstance} from "./config";
-import {BannerList, RecommendList} from "@/types";
-import {GetKeyType} from "@/utils/";
-
+import { axiosInstance } from "./config";
+import { BannerList, RecommendList } from "@/types";
+import { GetKeyType } from "@/utils/";
 
 interface ResponseTypes {
   "/banner": {
-    banners: BannerList
+    banners: BannerList;
   };
   "/personalized": {
-    result: RecommendList
+    result: RecommendList;
   };
   [key: string]: unknown;
 }

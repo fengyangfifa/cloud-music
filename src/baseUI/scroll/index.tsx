@@ -11,24 +11,32 @@ import BScroll from "better-scroll";
 import style from "./scroll.module.scss";
 
 type ScrollProps = {
-  direction?: "vertical" | "horizental",
-  click?: boolean,
-  refresh?: boolean,
-  onScroll?: (a: unknown) => void,
-  pullUp?: () => void,
-  pullDown?: () => void,
-  pullUpLoading?: boolean,
-  pullDownLoading?: boolean,
-  bounceTop?: boolean, // 是否支持向上吸顶
-  bounceBottom?: boolean // 是否支持向上吸顶
-}
-
+  direction?: "vertical" | "horizental";
+  click?: boolean;
+  refresh?: boolean;
+  onScroll?: (a: unknown) => void;
+  pullUp?: () => void;
+  pullDown?: () => void;
+  pullUpLoading?: boolean;
+  pullDownLoading?: boolean;
+  bounceTop?: boolean; // 是否支持向上吸顶
+  bounceBottom?: boolean; // 是否支持向上吸顶
+};
 
 const Scroll: FunctionComponent<ScrollProps> = forwardRef((props, ref) => {
   const [bScroll, setBScroll] = useState<BScroll>();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  const {direction, click, refresh, bounceTop, bounceBottom, pullUp, pullDown, onScroll} = props;
+  const {
+    direction,
+    click,
+    refresh,
+    bounceTop,
+    bounceBottom,
+    pullUp,
+    pullDown,
+    onScroll
+  } = props;
 
   useEffect(() => {
     if (!scrollContainerRef.current) {
@@ -125,12 +133,9 @@ Scroll.defaultProps = {
   direction: "vertical",
   click: true,
   refresh: true,
-  onScroll: () => {
-  },
-  pullUp: () => {
-  },
-  pullDown: () => {
-  },
+  onScroll: () => {},
+  pullUp: () => {},
+  pullDown: () => {},
   pullUpLoading: false,
   pullDownLoading: false,
   bounceTop: true,

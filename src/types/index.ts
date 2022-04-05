@@ -1,12 +1,12 @@
 interface BannerListItem {
-  imageUrl: string
+  imageUrl: string;
 }
 
 interface RecommendListItem {
-  id: string,
-  picUrl: string,
-  name: string,
-  playCount: number
+  id: string;
+  picUrl: string;
+  name: string;
+  playCount: number;
 }
 
 export type BannerList = Array<BannerListItem>;
