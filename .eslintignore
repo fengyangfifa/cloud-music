@@ -1,3 +1,4 @@
 # 忽略 config 目录下的所有 js 文件
 config/**/*.js
-scripts/*.js
+scripts/
+node_modules/
