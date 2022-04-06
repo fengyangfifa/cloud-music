@@ -3,12 +3,14 @@ import { Dispatch } from "redux";
 import {
   CHANGE_BANNER,
   CHANGE_BANNER_TYPE,
+  CHANGE_ENTER_LOADING,
+  CHANGE_ENTER_LOADING_TYPE,
   CHANGE_RECOMMEND_LIST,
   CHANGE_RECOMMEND_LIST_TYPE
 } from "./constants";
 
 import { BannerList, RecommendList } from "@/types";
-import { CreateActionType, createAction } from "@/utils";
+import { createAction, CreateActionType } from "@/utils";
 
 import { getBannerRequest, getRecommendListRequest } from "@/api/request";
 
@@ -34,7 +36,10 @@ export const getBannerList = () => {
 export const getRecommendList = () => {
   return (
     dispatch: Dispatch<
-      CreateActionType<CHANGE_RECOMMEND_LIST_TYPE, RecommendList>
+      CreateActionType<
+        CHANGE_RECOMMEND_LIST_TYPE | CHANGE_ENTER_LOADING_TYPE,
+        RecommendList | boolean
+      >
     >
   ) => {
     getRecommendListRequest()
@@ -43,6 +48,12 @@ export const getRecommendList = () => {
           createAction<CHANGE_RECOMMEND_LIST_TYPE, RecommendList>(
             CHANGE_RECOMMEND_LIST,
             data.data.result
+          )
+        );
+        dispatch(
+          createAction<CHANGE_ENTER_LOADING_TYPE, boolean>(
+            CHANGE_ENTER_LOADING,
+            false
           )
         );
       })

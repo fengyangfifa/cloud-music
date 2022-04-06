@@ -1,18 +1,24 @@
 import produce from "immer";
 import { Reducer } from "redux";
 
-import { CHANGE_BANNER, CHANGE_RECOMMEND_LIST } from "./constants";
+import {
+  CHANGE_BANNER,
+  CHANGE_RECOMMEND_LIST,
+  CHANGE_ENTER_LOADING
+} from "./constants";
 
 import { BannerList, RecommendList } from "@/types";
 
 export interface RecommendState {
   readonly bannerList: BannerList;
   readonly recommendList: RecommendList;
+  readonly enterLoading: boolean;
 }
 
 const defaultState: RecommendState = {
   bannerList: [],
-  recommendList: []
+  recommendList: [],
+  enterLoading: true
 };
 
 const recommendReducer: Reducer<RecommendState> = produce((state, action) => {
@@ -25,6 +31,9 @@ const recommendReducer: Reducer<RecommendState> = produce((state, action) => {
       break;
     case CHANGE_RECOMMEND_LIST:
       state.recommendList = action.data;
+      break;
+    case CHANGE_ENTER_LOADING:
+      state.enterLoading = action.data;
       break;
   }
 }, defaultState);
