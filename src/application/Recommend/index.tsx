@@ -23,10 +23,12 @@ function Recommend() {
     if (!bannerList.length) {
       dispatch(getBannerList());
     }
+  }, [dispatch, bannerList]);
+  useEffect(() => {
     if (!recommendList.length) {
       dispatch(getRecommendList());
     }
-  }, [dispatch, bannerList, recommendList]);
+  }, [dispatch, recommendList]);
 
   return (
     <div className={style["content"]}>
