@@ -50,7 +50,6 @@ const Scroll: FunctionComponent<ScrollProps> = forwardRef((props, ref) => {
       return debounce(pullUp, 300);
     }
     return () => {};
-    // eslint-disable-next-line
   }, [pullUp]);
 
   const pullDownDebounce = useMemo(() => {
