@@ -19,11 +19,11 @@ export const getBannerList = () => {
     dispatch: Dispatch<CreateActionType<CHANGE_BANNER_TYPE, BannerList>>
   ) => {
     getBannerRequest()
-      .then((data) => {
+      .then((res) => {
         dispatch(
           createAction<CHANGE_BANNER_TYPE, BannerList>(
             CHANGE_BANNER,
-            data.data.banners
+            res.data.banners
           )
         );
       })
@@ -43,11 +43,11 @@ export const getRecommendList = () => {
     >
   ) => {
     getRecommendListRequest()
-      .then((data) => {
+      .then((res) => {
         dispatch(
           createAction<CHANGE_RECOMMEND_LIST_TYPE, RecommendList>(
             CHANGE_RECOMMEND_LIST,
-            data.data.result
+            res.data.result
           )
         );
         dispatch(

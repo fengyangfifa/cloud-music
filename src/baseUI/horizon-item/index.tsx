@@ -16,22 +16,20 @@ const Horizon: FunctionComponent<HorizonProps> = (props) => {
 
   return (
     <Scroll direction={"horizental"}>
-      <div className={style.container}>
-        <div className={style.list}>
-          <span>{title}</span>
-          {list.map((item) => {
-            const selected = oldVal === item.key && style.selected;
-            return (
-              <span
-                className={clsx(style["list-item"], selected)}
-                key={item.key}
-                onClick={() => handleClick && handleClick(item.key)}
-              >
-                {item.name}
-              </span>
-            );
-          })}
-        </div>
+      <div className={style.list}>
+        <span>{title}</span>
+        {list.map((item) => {
+          const selected = oldVal === item.key && style.selected;
+          return (
+            <span
+              className={clsx(style["list-item"], selected)}
+              key={item.key}
+              onClick={() => handleClick && handleClick(item.key)}
+            >
+              {item.name}
+            </span>
+          );
+        })}
       </div>
     </Scroll>
   );

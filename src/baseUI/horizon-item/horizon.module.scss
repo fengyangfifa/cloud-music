@@ -1,35 +1,31 @@
 @import "../../assets/normal";
 
-.container {
-  width: fit-content;
+.list {
+  display: flex;
+  align-items: center;
+  height: 30px;
+  width: max-content;
 
-  .list {
-    display: flex;
-    align-items: center;
-    height: 30px;
-    overflow: hidden;
+  > span:first-of-type {
+    display: block;
+    flex: 0 0 auto;
+    padding: 5px 0;
+    margin-right: 5px;
+    color: grey;
+    font-size: $font-size-m;
+    vertical-align: middle;
+  }
 
-    > span:first-of-type {
-      display: block;
-      flex: 0 0 auto;
-      padding: 5px 0;
-      margin-right: 5px;
-      color: grey;
-      font-size: $font-size-m;
-      vertical-align: middle;
-    }
+  &-item {
+    flex: 0 0 auto;
+    font-size: $font-size-m;
+    padding: 5px 8px;
+    border-radius: 10px;
 
-    &-item {
-      flex: 0 0 auto;
-      font-size: $font-size-m;
-      padding: 5px 8px;
-      border-radius: 10px;
-
-      &.selected {
-        color: $theme-color;
-        border: 1px solid $theme-color;
-        opacity: 0.8;
-      }
+    &.selected {
+      color: $theme-color;
+      border: 1px solid $theme-color;
+      opacity: 0.8;
     }
   }
 }

@@ -9,3 +9,17 @@ export const getCount = (count: number) => {
     return Math.floor(count / 10000000) / 10 + "亿";
   }
 };
+
+export const debounce = (func: Function = () => {}, delay: number) => {
+  let timer: number;
+
+  return (...args: unknown[]) => {
+    if (timer) {
+      window.clearTimeout(timer);
+    }
+    timer = window.setTimeout(() => {
+      func.apply(this, args);
+      window.clearTimeout(timer);
+    }, delay);
+  };
+};

@@ -9,9 +9,13 @@
   }
 }
 
+.hidden {
+  display: none;
+}
+
 .loading-wrapper {
   > div {
-    position: fixed;
+    position: absolute;
     z-index: 1000;
     left: 0;
     right: 0;
