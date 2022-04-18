@@ -1,5 +1,5 @@
 import { axiosInstance } from "./config";
-import { BannerList, RecommendList, SingerList } from "@/types";
+import { BannerList, RecommendList, SingerList, RankList } from "@/types";
 import { GetKeyType, categoryMap } from "@/utils";
 
 interface ResponseTypes {
@@ -14,6 +14,9 @@ interface ResponseTypes {
   };
   "/artist/list": {
     artists: SingerList;
+  };
+  "/toplist/detail": {
+    list: RankList;
   };
 
   [key: string]: unknown;
@@ -47,4 +50,9 @@ export const getSingerListRequest = (
       categoryMap.get(category)?.area
     }&initial=${alpha.toLowerCase()}&offset=${count}`
   );
+};
+
+export const getRankListRequest = () => {
+  const url = "/toplist/detail";
+  return axiosInstance.get<GetKeyType<typeof url, ResponseTypes>>(url);
 };

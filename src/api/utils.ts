@@ -1,3 +1,5 @@
+import { RankList } from "@/types";
+
 export const getCount = (count: number) => {
   if (count < 0) return;
 
@@ -23,3 +25,11 @@ export const debounce = (func: Function = () => {}, delay: number) => {
     }, delay);
   };
 };
+
+export function findIndex(list: RankList) {
+  for (let i = 0; i < list.length - 1; i++) {
+    if (list[i].tracks.length && !list[i + 1].tracks.length) {
+      return i + 1;
+    }
+  }
+}

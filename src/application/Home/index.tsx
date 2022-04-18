@@ -1,10 +1,10 @@
 import React from "react";
-import { renderRoutes, RouteConfig } from "react-router-config";
+import { renderRoutes, RouteConfigComponentProps } from "react-router-config";
 import { NavLink } from "react-router-dom";
 
 import style from "./home.module.scss";
 
-function Home(props: RouteConfig) {
+function Home(props: RouteConfigComponentProps) {
   const { route } = props;
 
   return (
@@ -31,7 +31,7 @@ function Home(props: RouteConfig) {
           </div>
         </NavLink>
       </div>
-      {renderRoutes(route.routes)}
+      {renderRoutes(route?.routes)}
     </div>
   );
 }

@@ -1,0 +1,120 @@
+@import "../../assets/normal";
+
+@mixin common-css {
+  padding-top: 15px;
+  font-weight: 700;
+  font-size: $font-size-m;
+  color: $font-color-desc;
+}
+
+.container {
+  position: fixed;
+  top: 94px;
+  bottom: 0;
+  width: 100%;
+
+  .rank-container {
+    overflow: hidden;
+  }
+
+  .official {
+    margin: 0 5px 10px;
+    @include common-css;
+  }
+
+  .global {
+    margin: 10px 5px;
+    @include common-css;
+  }
+
+  .display-style {
+    display: flex;
+  }
+
+  .list {
+    margin-top: 10px;
+    padding: 0 5px;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    background-color: $background-color;
+
+    &::after {
+      content: "";
+      display: block;
+      width: 32vw;
+    }
+
+    &-item-style {
+      display: flex;
+    }
+
+    &-item {
+      padding: 3px 0;
+      border-bottom: 1px solid $border-color;
+
+      .img-style {
+        width: 27vw;
+        height: 27vw;
+      }
+
+      .img-wrapper {
+        width: 32vw;
+        height: 32vw;
+        border-radius: 3px;
+        position: relative;
+
+        .decorate {
+          position: absolute;
+          bottom: 0;
+          width: 100%;
+          height: 35px;
+          border-radius: 3px;
+          background: linear-gradient(hsla(0, 0%, 100%, 0), hsla(0, 0%, 43%, 0.4));
+        }
+
+        img {
+          width: 100%;
+          height: 100%;
+          border-radius: 3px;
+        }
+
+        .update-frequency {
+          position: absolute;
+          left: 7px;
+          bottom: 7px;
+          font-size: $font-size-ss;
+          color: $font-color-light;
+        }
+      }
+
+      .song-list {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        padding: 10px;
+
+        > li {
+          font-size: $font-size-s;
+          color: grey;
+        }
+      }
+    }
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .enter-loading {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 100px;
+    height: 100px;
+    margin: auto;
+  }
+}
