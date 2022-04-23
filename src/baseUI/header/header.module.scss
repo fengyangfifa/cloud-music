@@ -1,0 +1,23 @@
+@import "../../assets/normal";
+
+.header-container {
+  position: fixed;
+  padding: 0 10px 5px;
+  height: 40px;
+  width: 100%;
+  z-index: 100;
+  display: flex;
+  line-height: 40px;
+  color: black;
+
+  .back {
+    margin-right: 5px;
+    font-size: 20px;
+    width: 20px;
+  }
+
+  > h1 {
+    font-size: $font-size-l;
+    font-weight: 700;
+  }
+}

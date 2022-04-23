@@ -2,10 +2,11 @@ import React from "react";
 import { Redirect } from "react-router-dom";
 import { RouteConfig } from "react-router-config";
 
-import Home from "../application/Home";
-import Recommend from "../application/Recommend";
-import Singers from "../application/Singers";
-import Rank from "../application/Rank";
+import Home from "@/application/Home";
+import Recommend from "@/application/Recommend";
+import Singers from "@/application/Singers";
+import Rank from "@/application/Rank";
+import Album from "@/application/Album";
 
 const routes: Array<RouteConfig> = [
   {
@@ -21,7 +22,13 @@ const routes: Array<RouteConfig> = [
       },
       {
         path: "/recommend",
-        component: Recommend
+        component: Recommend,
+        routes: [
+          {
+            path: "/recommend/:id",
+            component: Album
+          }
+        ]
       },
       {
         path: "/singers",

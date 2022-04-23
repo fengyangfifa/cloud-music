@@ -3,7 +3,7 @@ interface BannerListItem {
 }
 
 interface RecommendListItem {
-  id: string;
+  id: number;
   picUrl: string;
   name: string;
   playCount: number;

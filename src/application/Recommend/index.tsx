@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { forceCheck } from "react-lazyload";
+import { renderRoutes, RouteConfigComponentProps } from "react-router-config";
 
 import Slider from "@/components/slider";
 import RecommendList from "@/components/list";
@@ -11,7 +12,7 @@ import { RootState } from "@/store";
 
 import style from "./recommend.module.scss";
 
-function Recommend() {
+function Recommend(props: Partial<RouteConfigComponentProps>) {
   const { bannerList, recommendList, enterLoading } = useSelector(
     (state: RootState) => {
       return state.recommend;
@@ -39,6 +40,7 @@ function Recommend() {
         </div>
       </Scroll>
       {enterLoading ? <Loading /> : null}
+      {renderRoutes(props.route?.routes)}
     </div>
   );
 }
