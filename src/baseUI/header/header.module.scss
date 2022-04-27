@@ -1,19 +1,25 @@
 @import "../../assets/normal";
 
 .header-container {
+  display: flex;
+
   position: fixed;
+  z-index: 100;
+
   padding: 0 10px 5px;
   height: 40px;
   width: 100%;
-  z-index: 100;
-  display: flex;
+  box-sizing: border-box;
+
   line-height: 40px;
-  color: black;
+
+  color: $font-color-light;
 
   .back {
-    margin-right: 5px;
-    font-size: 20px;
     width: 20px;
+    margin-right: 5px;
+
+    font-size: 20px;
   }
 
   > h1 {
