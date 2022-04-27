@@ -1,0 +1,11 @@
+.marquee {
+  overflow: hidden;
+
+  width: 100%;
+
+  .container {
+    width: fit-content;
+
+    white-space: nowrap;
+  }
+}
