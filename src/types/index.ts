@@ -26,7 +26,25 @@ interface RankListItem {
   coverImgId: number;
   updateFrequency: string;
   tracks: Tracks;
-  [propName: string]: any;
+}
+
+interface CreatorType {
+  avatarUrl: string;
+  nickname: string;
+}
+
+export interface AlbumTracksItem {
+  name: string;
+  ar: Array<Record<"name", string>>;
+  al: Record<"name", string>;
+}
+
+export interface AlbumType {
+  creator: CreatorType;
+  coverImgUrl: string;
+  subscribedCount: number;
+  name: string;
+  tracks: Array<AlbumTracksItem>;
 }
 
 export type BannerList = Array<BannerListItem>;

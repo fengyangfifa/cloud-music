@@ -246,3 +246,7 @@ export const getName = (list: Array<Record<"name", string>>) => {
     return pre;
   }, "");
 };
+
+export const isEmptyObject = (obj: Record<any, any>) => {
+  return Object.keys(obj).length === 0;
+};

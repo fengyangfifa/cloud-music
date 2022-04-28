@@ -1,5 +1,11 @@
 import { axiosInstance } from "./config";
-import { BannerList, RecommendList, SingerList, RankList } from "@/types";
+import {
+  BannerList,
+  RecommendList,
+  SingerList,
+  RankList,
+  AlbumType
+} from "@/types";
 import { GetKeyType, categoryMap } from "@/utils";
 
 interface ResponseTypes {
@@ -18,7 +24,9 @@ interface ResponseTypes {
   "/toplist/detail": {
     list: RankList;
   };
-
+  "/playlist/detail": {
+    playlist: AlbumType;
+  };
   [key: string]: unknown;
 }
 
@@ -55,4 +63,11 @@ export const getSingerListRequest = (
 export const getRankListRequest = () => {
   const url = "/toplist/detail";
   return axiosInstance.get<GetKeyType<typeof url, ResponseTypes>>(url);
+};
+
+export const getAlbumDetailRequest = (id: string) => {
+  const url = "/playlist/detail";
+  return axiosInstance.get<GetKeyType<typeof url, ResponseTypes>>(
+    `${url}?id=${id}`
+  );
 };
