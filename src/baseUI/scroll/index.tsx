@@ -7,19 +7,19 @@ import React, {
   FunctionComponent,
   useMemo
 } from "react";
-import BScroll from "better-scroll";
+import BScroll, { TranslaterPoint } from "better-scroll";
 import clsx from "clsx";
 
 import Loading from "@/baseUI/loading";
 import LoadingV2 from "@/baseUI/loading-v2";
-import { debounce } from "@/api/utils";
+import { debounce } from "@/utils";
 import style from "./scroll.module.scss";
 
 type ScrollProps = {
   direction?: "vertical" | "horizental";
   click?: boolean;
   refresh?: boolean;
-  onScroll?: (a: unknown) => void;
+  onScroll?: (pos: TranslaterPoint) => void;
   pullUp?: Function;
   pullDown?: Function;
   pullUpLoading?: boolean;
@@ -85,8 +85,8 @@ const Scroll: FunctionComponent<ScrollProps> = forwardRef((props, ref) => {
   useEffect(() => {
     if (!bScroll || !onScroll) return;
 
-    bScroll.on("scroll", (scroll: unknown) => {
-      onScroll(scroll);
+    bScroll.on("scroll", (pos: TranslaterPoint) => {
+      onScroll(pos);
     });
 
     return () => {
