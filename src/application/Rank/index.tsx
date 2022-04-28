@@ -7,7 +7,7 @@ import Scroll from "@/baseUI/scroll";
 import Loading from "@/baseUI/loading";
 import { RootState } from "@/store";
 import { RankList, Tracks } from "@/types";
-import { findIndex } from "@/api/utils";
+import { findIndex } from "@/utils";
 import style from "./rank.module.scss";
 import { renderRoutes, RouteConfigComponentProps } from "react-router-config";
 

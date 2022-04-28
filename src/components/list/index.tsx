@@ -4,7 +4,7 @@ import LazyLoad from "react-lazyload";
 import { useHistory } from "react-router-dom";
 
 import style from "./list.module.scss";
-import { getCount } from "@/api/utils";
+import { getCount } from "@/utils";
 import { RecommendList as RecommendListProps } from "@/types";
 import music from "./music.png";
 
