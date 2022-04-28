@@ -21,6 +21,7 @@ export type Tracks = Array<{
 }>;
 
 interface RankListItem {
+  id: number;
   name: string;
   coverImgUrl: string;
   coverImgId: number;

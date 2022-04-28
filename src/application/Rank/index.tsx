@@ -22,8 +22,8 @@ function Rank(props: RouteConfigComponentProps) {
   const officialList = rankList.slice(0, globalIndex);
   const globalList = rankList.slice(globalIndex);
 
-  const enterDetail = (name: string) => {
-    console.log(name);
+  const enterDetail = (id: number) => {
+    props.history.push(`/rank/${id}`);
   };
 
   useEffect(() => {
@@ -56,7 +56,7 @@ function Rank(props: RouteConfigComponentProps) {
                 item.tracks.length && style["list-item-style"]
               )}
               key={`${item.coverImgId} - ${item.name}`}
-              onClick={() => enterDetail(item.name)}
+              onClick={() => enterDetail(item.id)}
             >
               <div
                 className={clsx(
