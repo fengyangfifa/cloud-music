@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect, useRef } from "react";
 
-import style from "./marquee.module.scss";
+import "./marquee.scss";
 import { useMountedRef } from "@/utils/customHooks";
 
 interface MarqueeProps {
@@ -66,8 +66,8 @@ const Marquee: FunctionComponent<MarqueeProps> = (props) => {
   }, [duration, containerRef, marqueeRef, mountedRef]);
 
   return (
-    <div className={style.marquee} ref={marqueeRef}>
-      <div className={style.container} ref={containerRef}>
+    <div className="marquee" ref={marqueeRef}>
+      <div className="marquee-container" ref={containerRef}>
         {props.children}
       </div>
     </div>
