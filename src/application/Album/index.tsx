@@ -7,16 +7,15 @@ import { useDispatch, useSelector } from "react-redux";
 import Header from "@/baseUI/header";
 import Scroll from "@/baseUI/scroll";
 import Loading from "@/baseUI/loading";
-import { getName, getCount } from "@/utils";
+import SongList from "@/application/SongList";
 import {
   getAlbumList,
   changeEnterLoading,
   changeCurrentAlbum
 } from "./store/actionCreators";
+import { HEADER_HEIGHT } from "@/utils";
 import { RootState } from "@/store";
 import "./album.scss";
-
-const HEADER_HEIGHT = 45;
 
 function Album() {
   const dispatch = useDispatch();
@@ -138,41 +137,6 @@ function Album() {
     );
   };
 
-  const renderSongList = () => {
-    return (
-      <div className="song-list">
-        <div className="first-line">
-          <div className="play-all">
-            <i className="iconfont">&#xe6e3;</i>
-            <span>
-              播放全部{" "}
-              <span className="sum">(共 {currentAlbum.tracks.length} 首)</span>
-            </span>
-          </div>
-          <div className="add-list">
-            <i className="iconfont">&#xe62d;</i>
-            <span> 收藏 ({getCount(currentAlbum.subscribedCount)})</span>
-          </div>
-        </div>
-        <ul className="song-item">
-          {currentAlbum.tracks.map((item, index) => {
-            return (
-              <li key={index}>
-                <span className="index">{index + 1}</span>
-                <div className="info">
-                  <span>{item.name}</span>
-                  <span>
-                    {getName(item.ar)} - {item.al.name}
-                  </span>
-                </div>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
-    );
-  };
-
   return (
     <CSSTransition
       in={showStatus}
@@ -193,7 +157,12 @@ function Album() {
           <div>
             {renderTopDesc()}
             {renderMenu()}
-            {renderSongList()}
+            <SongList
+              collectCount={currentAlbum.tracks.length}
+              showCollect={true}
+              songs={currentAlbum.tracks}
+              showBackground={true}
+            />
           </div>
         </Scroll>
         {enterLoading ? <Loading /> : null}

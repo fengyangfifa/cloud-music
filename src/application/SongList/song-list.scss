@@ -1,0 +1,132 @@
+@import "../../assets/normal";
+
+.show-background {
+  background: $highlight-background-color;
+}
+
+.song-list {
+  border-radius: 10px;
+
+  opacity: 0.98;
+
+  .first-line {
+    justify-content: space-between;
+
+    position: relative;
+
+    box-sizing: border-box;
+    padding: 10px 0;
+    margin-left: 10px;
+    border-bottom: 1px solid $border-color;
+
+    .play-all {
+      display: inline-block;
+
+      line-height: 24px;
+
+      color: $font-color-desc;
+
+      .iconfont {
+        margin-right: 10px;
+
+        font-size: 24px;
+        vertical-align: top;
+      }
+
+      .sum {
+        font-size: $font-size-s;
+
+        color: $font-color-desc-v2;
+      }
+
+      > span {
+        vertical-align: top;
+      }
+    }
+
+    .add-list,
+    .is-collected {
+      display: flex;
+      align-items: center;
+
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+
+      width: 130px;
+      border-radius: 3px;
+
+      font-size: 0;
+      line-height: 34px;
+      vertical-align: top;
+
+      color: $font-color-light;
+      background: $theme-color;
+
+      .iconfont {
+        margin: 0 5px 0 10px;
+
+        font-size: 10px;
+        vertical-align: top;
+      }
+
+      span {
+        font-size: 14px;
+        line-height: 34px;
+      }
+    }
+
+    .is-collected {
+      color: $font-color-desc;
+      background: $background-color;
+    }
+  }
+
+  .song-item {
+    > li {
+      display: flex;
+      align-items: center;
+
+      height: 60px;
+
+      .index {
+        flex-basis: 60px;
+
+        width: 60px;
+        height: 60px;
+
+        line-height: 60px;
+        text-align: center;
+      }
+
+      .info {
+        @include no-wrap;
+
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+
+        height: 100%;
+        padding: 5px 0;
+        box-sizing: border-box;
+        border-bottom: 1px solid $border-color;
+
+        > span {
+          @include no-wrap;
+
+          &:first-of-type {
+            color: $font-color-desc;
+          }
+
+          &:last-of-type {
+            font-size: $font-size-s;
+
+            color: #bba8a8;
+          }
+        }
+      }
+    }
+  }
+}

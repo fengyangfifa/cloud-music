@@ -250,3 +250,5 @@ export const getName = (list: Array<Record<"name", string>>) => {
 export const isEmptyObject = (obj: Record<any, any>) => {
   return Object.keys(obj).length === 0;
 };
+
+export const HEADER_HEIGHT = 45;
