@@ -11,6 +11,8 @@
     "strict": "error",
     "eqeqeq": ["error", "always"],
     "eol-last": "error",
-    "max-len": ["error", {"code": 100}]
+    "max-len": ["error", {"code": 100}],
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": "error"
   }
 }
