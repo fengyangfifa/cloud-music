@@ -4,8 +4,8 @@ import React, {
   useEffect,
   useRef,
   useImperativeHandle,
-  FunctionComponent,
-  useMemo
+  useMemo,
+  PropsWithChildren
 } from "react";
 import BScroll, { TranslaterPoint } from "better-scroll";
 import clsx from "clsx";
@@ -13,9 +13,10 @@ import clsx from "clsx";
 import Loading from "@/baseUI/loading";
 import LoadingV2 from "@/baseUI/loading-v2";
 import { debounce } from "@/utils";
+import { ScrollHandle } from "@/types";
 import style from "./scroll.module.scss";
 
-type ScrollProps = {
+type ScrollProps = PropsWithChildren<{
   direction?: "vertical" | "horizental";
   click?: boolean;
   refresh?: boolean;
@@ -26,9 +27,9 @@ type ScrollProps = {
   pullDownLoading?: boolean;
   bounceTop?: boolean; // 是否支持向上吸顶
   bounceBottom?: boolean; // 是否支持向上吸顶
-};
+}>;
 
-const Scroll: FunctionComponent<ScrollProps> = forwardRef((props, ref) => {
+const Scroll = forwardRef<ScrollHandle, ScrollProps>((props, ref) => {
   const [bScroll, setBScroll] = useState<BScroll>();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
