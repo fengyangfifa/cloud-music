@@ -10,6 +10,7 @@ interface RecommendListItem {
 }
 
 interface SingerListItem {
+  id: number;
   picId: number;
   picUrl: string;
   name: string;
@@ -34,10 +35,13 @@ interface CreatorType {
   nickname: string;
 }
 
-export interface AlbumTracksItem {
+export interface TracksItem {
+  id: number;
   name: string;
-  ar: Array<Record<"name", string>>;
-  al: Record<"name", string>;
+  artists?: Array<Record<"name", string>>;
+  ar?: Array<Record<"name", string>>;
+  al?: Record<"name", string>;
+  album?: Record<"name", string>;
 }
 
 export interface AlbumType {
@@ -45,7 +49,24 @@ export interface AlbumType {
   coverImgUrl: string;
   subscribedCount: number;
   name: string;
-  tracks: Array<AlbumTracksItem>;
+  tracks: Array<TracksItem>;
+}
+
+export interface ScrollHandle {
+  refresh: () => void;
+  getBScroll: () => void;
+}
+
+export interface ArtistType {
+  name: string;
+  picUrl: string;
+}
+
+export type SongsType = Array<TracksItem>;
+
+export interface SingerType {
+  artist: ArtistType;
+  hotSongs: SongsType;
 }
 
 export type BannerList = Array<BannerListItem>;

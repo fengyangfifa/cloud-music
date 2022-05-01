@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import LazyLoad from "react-lazyload";
 import { forceCheck } from "react-lazyload";
+import { renderRoutes, RouteConfigComponentProps } from "react-router-config";
 
 import Horizon from "@/baseUI/horizon-item";
 import { categoryTypes, alphaTypes } from "@/utils";
@@ -21,7 +22,7 @@ import singer from "./singer.png";
 import style from "./singers.module.scss";
 import Loading from "@/baseUI/loading";
 
-function Singers() {
+function Singers(props: RouteConfigComponentProps) {
   let [category, setCategory] = useState("");
   let [alpha, setAlpha] = useState("");
   const {
@@ -71,6 +72,10 @@ function Singers() {
     }
   };
 
+  const enterDetail = (id: number) => {
+    props.history.push(`/singers/${id}`);
+  };
+
   useEffect(() => {
     dispatch(getHotSingerList());
   }, [dispatch]);
@@ -80,7 +85,11 @@ function Singers() {
       <div className={style.list}>
         {singerList.map((item, index) => {
           return (
-            <div className={style["list-item"]} key={`${item.picId + index}`}>
+            <div
+              className={style["list-item"]}
+              key={`${item.picId + index}`}
+              onClick={() => enterDetail(item.id)}
+            >
               <div className={style["img-wrapper"]}>
                 <LazyLoad
                   placeholder={
@@ -131,6 +140,7 @@ function Singers() {
         </Scroll>
         <Loading show={enterLoading} />
       </div>
+      {renderRoutes(props.route?.routes)}
     </>
   );
 }

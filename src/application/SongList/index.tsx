@@ -2,12 +2,12 @@ import React from "react";
 import clsx from "clsx";
 
 import { getCount, getName } from "@/utils";
-import { AlbumTracksItem } from "@/types";
+import { TracksItem } from "@/types";
 import "./song-list.scss";
 
 interface SongListProps {
   showCollect: boolean;
-  songs: Array<AlbumTracksItem>;
+  songs: Array<TracksItem>;
   showBackground?: boolean;
   collectCount?: number;
 }
@@ -24,7 +24,7 @@ const SongList = React.forwardRef<HTMLDivElement, SongListProps>(
       console.log(index, e);
     };
 
-    const songList = (list: Array<AlbumTracksItem>) => {
+    const songList = (list: Array<TracksItem>) => {
       return list.map((item, index) => {
         return (
           <li key={item.id} onClick={(e) => selectItem(e, index)}>

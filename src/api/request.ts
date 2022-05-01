@@ -4,7 +4,8 @@ import {
   RecommendList,
   SingerList,
   RankList,
-  AlbumType
+  AlbumType,
+  SingerType
 } from "@/types";
 import { GetKeyType, categoryMap } from "@/utils";
 
@@ -27,6 +28,7 @@ interface ResponseTypes {
   "/playlist/detail": {
     playlist: AlbumType;
   };
+  "/artists": SingerType;
   [key: string]: unknown;
 }
 
@@ -67,6 +69,13 @@ export const getRankListRequest = () => {
 
 export const getAlbumDetailRequest = (id: string) => {
   const url = "/playlist/detail";
+  return axiosInstance.get<GetKeyType<typeof url, ResponseTypes>>(
+    `${url}?id=${id}`
+  );
+};
+
+export const getSingerInfoRequest = (id: string) => {
+  const url = "/artists";
   return axiosInstance.get<GetKeyType<typeof url, ResponseTypes>>(
     `${url}?id=${id}`
   );
