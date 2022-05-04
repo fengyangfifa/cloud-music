@@ -252,3 +252,34 @@ export const isEmptyObject = (obj: Record<any, any>) => {
 };
 
 export const HEADER_HEIGHT = 45;
+
+const vendor = (() => {
+  const transformNames = {
+    webkit: "webkitTransform", // safari、chrome
+    Moz: "MozTransform", // firefox
+    O: "OTransform", // opera
+    ms: "msTransform", // ie
+    standard: "Transform"
+  };
+
+  const el = document.documentElement || document.createElement("div");
+  const elementStyle = el.style;
+  for (const [key, value] of Object.entries(transformNames)) {
+    // 骗过 ts 检查
+    if (elementStyle[value as unknown as number] !== undefined) {
+      return key;
+    }
+  }
+
+  return "standard";
+})();
+
+export function prefixStyle(styleProperty: string) {
+  if (vendor === "standard") {
+    return styleProperty;
+  }
+
+  return (
+    vendor + styleProperty.charAt(0).toUpperCase() + styleProperty.substring(1)
+  );
+}
