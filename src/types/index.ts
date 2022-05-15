@@ -143,6 +143,10 @@ export interface ProgressBarHandle {
   adjustment: () => void;
 }
 
+export interface ToastHandle {
+  show: () => void;
+}
+
 export type BannerList = Array<BannerListItem>;
 export type RecommendList = Array<RecommendListItem>;
 export type SingerList = Array<SingerListItem>;

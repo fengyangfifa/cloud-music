@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import MiniPlayer from "./miniPlayer";
 import NormalPlayer from "./normalPlayer";
+import Toast from "@/baseUI/toast";
 import { RootState } from "@/store";
 import { findIndex, getSongUrl, shuffle } from "@/utils";
 import {
@@ -13,7 +14,7 @@ import {
   changePlayList,
   changePlayMode
 } from "./store/actionCreators";
-import { PlayMode, SongType } from "@/types";
+import { PlayMode, SongType, ToastHandle } from "@/types";
 
 function Player() {
   const dispatch = useDispatch();
@@ -34,6 +35,8 @@ function Player() {
   const [duration, setDuration] = useState(0);
   // 歌曲播放进度
   const [preSong, setPreSong] = useState({ id: 0 });
+  const [modeText, setModeText] = useState("");
+  const toastRef = useRef<ToastHandle>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
   const percent = isNaN(currentTime / duration) ? 0 : currentTime / duration;
 
@@ -159,18 +162,22 @@ function Player() {
       changePlayListDispatch(sequencePlayList);
       const index = findIndex(currentSong, sequencePlayList);
       changeCurrentIndexDispatch(index);
+      setModeText("顺序循环");
     } else if (newMode === 1) {
       // 单曲循环
       changePlayListDispatch(sequencePlayList);
+      setModeText("单曲循环");
     } else {
       // 随机播放
       const newList = shuffle(sequencePlayList);
       const index = findIndex(currentSong, newList);
       changePlayListDispatch(newList);
       changeCurrentIndexDispatch(index);
+      setModeText("随机播放");
     }
 
     changeModeDispatch(newMode);
+    toastRef.current?.show();
   };
 
   const handlePrev = () => {
@@ -245,6 +252,7 @@ function Player() {
         changeMode={changeMode}
       />
       <audio ref={audioRef} onTimeUpdate={updateTime} onEnded={handleEnd} />
+      <Toast text={modeText} ref={toastRef} />
     </div>
   );
 }
