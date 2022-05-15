@@ -100,12 +100,14 @@ function Player() {
     setPreSong(currentSong);
     audioRef.current.src = getSongUrl(currentSong.id);
     if (playing) {
-      audioRef.current.play();
+      audioRef.current.play().catch(() => {
+        togglePlayingDispatch(false);
+      });
     }
 
     setCurrentTime(0);
     setDuration(currentSong.dt / 1000);
-  }, [currentSong, playing, preSong.id]);
+  }, [currentSong, playing, preSong.id, togglePlayingDispatch]);
 
   useEffect(() => {
     if (playing) {
