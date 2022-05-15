@@ -1,0 +1,264 @@
+@import "../../../assets/normal";
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.normal-player-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 150;
+
+  background: $background-color;
+
+  &.normal-enter,
+  &.normal-exit-done {
+    .top {
+      transform: translate3d(0, -100px, 0);
+    }
+
+    .bottom {
+      transform: translate3d(0, 100px, 0);
+    }
+  }
+
+  &.normal-enter-active,
+  &.normal-exit-active {
+    .top,
+    .bottom {
+      transform: translate3d(0, 0, 0);
+      transition: all 0.4s cubic-bezier(0.86, 0.18, 0.82, 1.32);
+    }
+
+    opacity: 1;
+    transition: all 0.4s;
+  }
+
+  &.normal-exit-active {
+    opacity: 0;
+  }
+
+  .background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+
+    width: 100%;
+    height: 100%;
+
+    opacity: 0.6;
+    filter: blur(20px);
+
+    &.layer {
+      background: $font-color-desc;
+      opacity: 0.3;
+      filter: none;
+    }
+  }
+
+  .top {
+    position: relative;
+
+    margin-bottom: 25px;
+
+    .back {
+      position: absolute;
+      top: 0;
+      left: 6px;
+      z-index: 50;
+
+      .iconfont {
+        display: block;
+
+        padding: 9px;
+
+        font-size: 24px;
+        font-weight: bold;
+
+        color: $font-color-desc;
+
+        transform: rotate(90deg);
+      }
+    }
+
+    .title {
+      @include no-wrap;
+
+      width: 70%;
+      margin: 0 auto;
+
+      font-size: $font-size-l;
+      line-height: 40px;
+      text-align: center;
+
+      color: $font-color-desc;
+    }
+
+    .subtitle {
+      @include no-wrap;
+
+      font-size: $font-size-m;
+      line-height: 20px;
+      text-align: center;
+
+      color: $font-color-desc-v2;
+    }
+  }
+
+  .middle {
+    overflow: hidden;
+
+    position: fixed;
+    top: 80px;
+    bottom: 170px;
+
+    width: 100%;
+
+    font-size: 0;
+    white-space: nowrap;
+
+    .cd-wrapper {
+      position: absolute;
+      top: 10%;
+      left: 0;
+      right: 0;
+
+      width: 80%;
+      height: 80vw;
+      margin: auto;
+      box-sizing: border-box;
+
+      .cd {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+
+        .image {
+          position: absolute;
+          top: 0;
+          left: 0;
+
+          width: 100%;
+          height: 100%;
+          box-sizing: border-box;
+          border-radius: 50%;
+          border: 10px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .play {
+          animation-name: rotate;
+          animation-duration: 20s;
+          animation-timing-function: linear;
+          animation-iteration-count: infinite;
+
+          &.pause {
+            animation-play-state: paused;
+          }
+        }
+      }
+
+      .playing-lyric {
+        margin-top: 20px;
+
+        font-size: $font-size-m;
+        line-height: 20px;
+        white-space: normal;
+        text-align: center;
+
+        color: rgba(255, 255, 255, 0.5);
+      }
+    }
+  }
+
+  .bottom {
+    position: absolute;
+    bottom: 50px;
+
+    width: 100%;
+
+    .operators {
+      display: flex;
+      align-items: center;
+
+      .icon {
+        flex: 1;
+
+        font-weight: 300;
+
+        color: $font-color-desc;
+
+        &.disable {
+          color: $theme-color-shadow;
+        }
+
+        i {
+          font-size: 30px;
+          font-weight: 300;
+        }
+      }
+
+      .i-left {
+        text-align: right;
+      }
+
+      .i-center {
+        padding: 0 20px;
+
+        text-align: center;
+
+        i {
+          font-size: 40px;
+        }
+      }
+
+      .i-right {
+        text-align: left;
+      }
+
+      .icon-favorite {
+        color: $theme-color;
+      }
+    }
+  }
+
+  .progress-wrapper {
+    display: flex;
+    align-items: center;
+
+    width: 80%;
+    margin: 0 auto;
+    padding: 10px 0;
+
+    .time {
+      flex: 0 0 30px;
+
+      width: 30px;
+
+      font-size: $font-size-s;
+      line-height: 30px;
+
+      color: $font-color-desc;
+
+      &.time-l {
+        text-align: left;
+      }
+
+      &.time-r {
+        text-align: right;
+      }
+    }
+
+    .progress-bar-wrapper {
+      flex: 1;
+    }
+  }
+}

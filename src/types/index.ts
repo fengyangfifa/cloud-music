@@ -69,6 +69,80 @@ export interface SingerType {
   hotSongs: SongsType;
 }
 
+export enum PlayMode {
+  sequence = 0,
+  loop = 1,
+  random = 2
+}
+
+export interface SongType {
+  ftype: number;
+  djId: number;
+  a: null;
+  cd: string;
+  crbt: null;
+  no: number;
+  st: number;
+  rt: string;
+  cf: string;
+  alia: Array<string>;
+  rtUrls: Array<string>;
+  fee: number;
+  s_id: number;
+  copyright: number;
+  h: {
+    br: number;
+    fid: number;
+    size: number;
+    vd: number;
+  };
+  mv: number;
+  al: {
+    id: number;
+    name: string;
+    picUrl: string;
+    tns: Array<string>;
+    pic_str: string;
+    pic: number;
+  };
+  name: string;
+  l: {
+    br: number;
+    fid: number;
+    size: number;
+    vd: number;
+  };
+  rtype: number;
+  m: {
+    br: number;
+    fid: number;
+    size: number;
+    vd: number;
+  };
+  cp: number;
+  mark: number;
+  rtUrl: null;
+  mst: number;
+  dt: number;
+  ar: Array<{
+    id: number;
+    name: string;
+    tns: Array<string>;
+    alias: Array<string>;
+  }>;
+  pop: number;
+  pst: number;
+  t: number;
+  v: number;
+  id: number;
+  publishTime: number;
+  rurl: null;
+}
+
+export interface ProgressBarHandle {
+  adjustment: () => void;
+}
+
 export type BannerList = Array<BannerListItem>;
 export type RecommendList = Array<RecommendListItem>;
 export type SingerList = Array<SingerListItem>;

@@ -7,7 +7,7 @@ import Scroll from "@/baseUI/scroll";
 import Loading from "@/baseUI/loading";
 import { RootState } from "@/store";
 import { RankList, Tracks } from "@/types";
-import { findIndex } from "@/utils";
+import { filterIndex } from "@/utils";
 import style from "./rank.module.scss";
 import { renderRoutes, RouteConfigComponentProps } from "react-router-config";
 
@@ -18,7 +18,7 @@ function Rank(props: RouteConfigComponentProps) {
     return state.rank;
   });
 
-  const globalIndex = findIndex(rankList);
+  const globalIndex = filterIndex(rankList);
   const officialList = rankList.slice(0, globalIndex);
   const globalList = rankList.slice(globalIndex);
 

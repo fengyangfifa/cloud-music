@@ -1,6 +1,6 @@
 import React from "react";
 
-import Marquee from "@/baseUI/Marquee";
+import Marquee from "@/baseUI/marquee";
 import style from "./header.module.scss";
 
 interface HeaderProps {

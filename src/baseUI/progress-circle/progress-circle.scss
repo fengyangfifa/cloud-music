@@ -1,0 +1,23 @@
+@import "../../assets/normal";
+
+.circle {
+  position: relative;
+
+  font-size: 0;
+
+  circle {
+    transform-origin: center;
+
+    stroke-width: 8px;
+
+    &.progress-background {
+      transform: scale(0.9);
+      stroke: $theme-color-shadow;
+    }
+
+    &.progress-bar {
+      transform: scale(0.9) rotate(-90deg);
+      stroke: $theme-color;
+    }
+  }
+}

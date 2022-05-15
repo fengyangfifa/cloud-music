@@ -2,6 +2,7 @@ import React from "react";
 import { renderRoutes, RouteConfigComponentProps } from "react-router-config";
 import { NavLink } from "react-router-dom";
 
+import Player from "@/application/Player";
 import style from "./home.module.scss";
 
 function Home(props: RouteConfigComponentProps) {
@@ -32,6 +33,7 @@ function Home(props: RouteConfigComponentProps) {
         </NavLink>
       </div>
       {renderRoutes(route?.routes)}
+      <Player />
     </div>
   );
 }

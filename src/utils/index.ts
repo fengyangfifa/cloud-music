@@ -1,4 +1,4 @@
-import { RankList } from "@/types";
+import { RankList, SongType } from "@/types";
 
 export type GetKeyType<
   T extends string,
@@ -232,7 +232,7 @@ export const debounce = (func: Function = () => {}, delay: number) => {
   };
 };
 
-export function findIndex(list: RankList) {
+export function filterIndex(list: RankList) {
   for (let i = 0; i < list.length - 1; i++) {
     if (list[i].tracks.length && !list[i + 1].tracks.length) {
       return i + 1;
@@ -282,4 +282,42 @@ export function prefixStyle(styleProperty: string) {
   return (
     vendor + styleProperty.charAt(0).toUpperCase() + styleProperty.substring(1)
   );
+}
+
+export function getSongUrl(id: number) {
+  return `https://music.163.com/song/media/outer/url?id=${id}.mp3`;
+}
+
+export function formatPlayTime(interval: number) {
+  interval = Math.floor(interval);
+  const minute = Math.floor(interval / 60);
+  const second = (interval % 60).toString().padStart(2, "0");
+
+  return `${minute}:${second}`;
+}
+
+export const findIndex = (song: SongType, list: Array<SongType>) => {
+  return list.findIndex((item) => {
+    return song.id === item.id;
+  });
+};
+
+function getRandomInt(min: number, max: number) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+export function shuffle(arr: Array<SongType>) {
+  const new_arr: Array<SongType> = [];
+  arr.forEach((item) => {
+    new_arr.push(item);
+  });
+
+  for (let i = 0; i < new_arr.length; i++) {
+    let j = getRandomInt(0, i);
+    let t = new_arr[i];
+    new_arr[i] = new_arr[j];
+    new_arr[j] = t;
+  }
+
+  return new_arr;
 }

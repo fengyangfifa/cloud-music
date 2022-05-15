@@ -21,7 +21,7 @@ function RecommendList(props: ListProps) {
 
   return (
     <div className={style["list-wrapper"]}>
-      <h1 className={style.title}> 推荐歌单 </h1>
+      <h1 className={style.title}>推荐歌单</h1>
       <div className={style.list}>
         {props.recommendList.map((item, index) => {
           return (
