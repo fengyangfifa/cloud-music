@@ -3,12 +3,12 @@ import { CSSTransition } from "react-transition-group";
 import animations from "create-keyframe-animation";
 
 import { formatPlayTime, getName } from "@/utils";
-import { PlayMode, ProgressBarHandle, SongType } from "@/types";
+import { PlayMode, ProgressBarHandle, TracksItem } from "@/types";
 import ProgressBar from "@/baseUI/progress-bar";
 import "./normal-player.scss";
 
 interface NormalPlayerProps {
-  song: SongType;
+  song: TracksItem;
   fullScreen: boolean;
   playing: boolean;
   percent: number;
@@ -184,7 +184,7 @@ function NormalPlayer(props: NormalPlayerProps) {
       <div className="normal-player-container" ref={normalPlayerRef}>
         <div className="background">
           <img
-            src={song.al.picUrl + "?param=300x300"}
+            src={song.al?.picUrl + "?param=300x300"}
             width="100%"
             height="100%"
             alt="歌曲图片"
@@ -196,14 +196,14 @@ function NormalPlayer(props: NormalPlayerProps) {
             <i className="iconfont icon-back">&#xe662;</i>
           </div>
           <h1 className="title">{song.name}</h1>
-          <h1 className="subtitle">{getName(song.ar)}</h1>
+          <h1 className="subtitle">{getName(song.ar || [])}</h1>
         </div>
         <div className="middle" ref={cdWrapperRef}>
           <div className="cd-wrapper">
             <div className="cd">
               <img
                 className={`image play ${!playing ? "pause" : ""}`}
-                src={song.al.picUrl + "?param=400x400"}
+                src={song.al?.picUrl + "?param=400x400"}
                 alt=""
               />
             </div>

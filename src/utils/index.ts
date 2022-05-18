@@ -1,4 +1,4 @@
-import { RankList, SongType } from "@/types";
+import { RankList, TracksItem } from "@/types";
 
 export type GetKeyType<
   T extends string,
@@ -296,7 +296,7 @@ export function formatPlayTime(interval: number) {
   return `${minute}:${second}`;
 }
 
-export const findIndex = (song: SongType, list: Array<SongType>) => {
+export const findIndex = (song: TracksItem, list: Array<TracksItem>) => {
   return list.findIndex((item) => {
     return song.id === item.id;
   });
@@ -306,8 +306,8 @@ function getRandomInt(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-export function shuffle(arr: Array<SongType>) {
-  const new_arr: Array<SongType> = [];
+export function shuffle(arr: Array<TracksItem>) {
+  const new_arr: Array<TracksItem> = [];
   arr.forEach((item) => {
     new_arr.push(item);
   });

@@ -17,10 +17,13 @@ import {
   SET_SHOW_PLAYLIST_TYPE
 } from "./constants";
 import { createAction } from "@/utils";
-import { PlayMode, SongType } from "@/types";
+import { PlayMode, TracksItem } from "@/types";
 
-export const changeCurrentSong = (data: SongType) => {
-  return createAction<SET_CURRENT_SONG_TYPE, SongType>(SET_CURRENT_SONG, data);
+export const changeCurrentSong = (data: TracksItem) => {
+  return createAction<SET_CURRENT_SONG_TYPE, TracksItem>(
+    SET_CURRENT_SONG,
+    data
+  );
 };
 
 export const changeFullScreen = (data: boolean) => {
@@ -31,15 +34,15 @@ export const changePlayingState = (data: boolean) => {
   return createAction<SET_PLAYING_STATE_TYPE, boolean>(SET_PLAYING_STATE, data);
 };
 
-export const changeSequencePlayList = (data: unknown) => {
-  return createAction<SET_SEQUENCE_PLAYLIST_TYPE, unknown>(
+export const changeSequencePlayList = (data: Array<TracksItem>) => {
+  return createAction<SET_SEQUENCE_PLAYLIST_TYPE, Array<TracksItem>>(
     SET_SEQUENCE_PLAYLIST,
     data
   );
 };
 
-export const changePlayList = (data: Array<SongType>) => {
-  return createAction<SET_PLAYLIST_TYPE, Array<SongType>>(SET_PLAYLIST, data);
+export const changePlayList = (data: Array<TracksItem>) => {
+  return createAction<SET_PLAYLIST_TYPE, Array<TracksItem>>(SET_PLAYLIST, data);
 };
 
 export const changePlayMode = (data: PlayMode) => {

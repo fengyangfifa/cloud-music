@@ -3,11 +3,11 @@ import { CSSTransition } from "react-transition-group";
 
 import ProgressCircle from "@/baseUI/progress-circle";
 import { getName } from "@/utils";
-import { SongType } from "@/types";
+import { TracksItem } from "@/types";
 import "./mini-player.scss";
 
 interface MiniPlayerProps {
-  song: SongType;
+  song: TracksItem;
   fullScreen: boolean;
   playing: boolean;
   percent: number;
@@ -61,7 +61,7 @@ function MiniPlayer(props: MiniPlayerProps) {
         </div>
         <div className="text">
           <h2 className="name">{song.name}</h2>
-          <p className="desc">{getName(song.ar)}</p>
+          <p className="desc">{getName(song.ar || [])}</p>
         </div>
         <div className="control">
           <ProgressCircle radius={32} percent={percent}>

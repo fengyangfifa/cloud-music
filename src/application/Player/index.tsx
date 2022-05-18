@@ -14,7 +14,7 @@ import {
   changePlayList,
   changePlayMode
 } from "./store/actionCreators";
-import { PlayMode, SongType, ToastHandle } from "@/types";
+import { PlayMode, ToastHandle, TracksItem } from "@/types";
 
 function Player() {
   const dispatch = useDispatch();
@@ -41,7 +41,7 @@ function Player() {
   const percent = isNaN(currentTime / duration) ? 0 : currentTime / duration;
 
   const changeCurrentDispatch = useCallback(
-    (data: SongType) => {
+    (data: TracksItem) => {
       dispatch(changeCurrentSong(data));
     },
     [dispatch]
@@ -73,15 +73,11 @@ function Player() {
   );
 
   const changePlayListDispatch = useCallback(
-    (data: Array<SongType>) => {
+    (data: Array<TracksItem>) => {
       dispatch(changePlayList(data));
     },
     [dispatch]
   );
-
-  useEffect(() => {
-    changeCurrentIndexDispatch(0);
-  }, [changeCurrentIndexDispatch]);
 
   useEffect(() => {
     if (!playList.length || currentIndex === -1 || !playList[currentIndex]) {
@@ -230,29 +226,33 @@ function Player() {
 
   return (
     <div>
-      <MiniPlayer
-        song={currentSong}
-        fullScreen={fullScreen}
-        playing={playing}
-        percent={percent}
-        toggleFullScreen={toggleFullScreenDispatch}
-        clickPlaying={clickPlaying}
-      />
-      <NormalPlayer
-        mode={mode}
-        song={currentSong}
-        fullScreen={fullScreen}
-        playing={playing}
-        currentTime={currentTime}
-        duration={duration}
-        percent={percent}
-        toggleFullScreen={toggleFullScreenDispatch}
-        clickPlaying={clickPlaying}
-        onProgressChange={onProgressChange}
-        handlePrev={handlePrev}
-        handleNext={handleNext}
-        changeMode={changeMode}
-      />
+      {sequencePlayList.length > 0 ? (
+        <MiniPlayer
+          song={currentSong}
+          fullScreen={fullScreen}
+          playing={playing}
+          percent={percent}
+          toggleFullScreen={toggleFullScreenDispatch}
+          clickPlaying={clickPlaying}
+        />
+      ) : null}
+      {sequencePlayList.length > 0 ? (
+        <NormalPlayer
+          mode={mode}
+          song={currentSong}
+          fullScreen={fullScreen}
+          playing={playing}
+          currentTime={currentTime}
+          duration={duration}
+          percent={percent}
+          toggleFullScreen={toggleFullScreenDispatch}
+          clickPlaying={clickPlaying}
+          onProgressChange={onProgressChange}
+          handlePrev={handlePrev}
+          handleNext={handleNext}
+          changeMode={changeMode}
+        />
+      ) : null}
       <audio ref={audioRef} onTimeUpdate={updateTime} onEnded={handleEnd} />
       <Toast text={modeText} ref={toastRef} />
     </div>
