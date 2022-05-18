@@ -8,11 +8,12 @@ import Header from "@/baseUI/header";
 import Scroll from "@/baseUI/scroll";
 import SongList from "@/application/SongList";
 import Loading from "@/baseUI/loading";
-import { ScrollHandle } from "@/types";
+import { ScrollHandle, MusicNoteHandle } from "@/types";
 import { HEADER_HEIGHT } from "@/utils";
 import { getSingerInfo, changeEnterLoading } from "./store/actionCreators";
 import { RootState } from "@/store";
 import "./singer.scss";
+import MusicNote from "@/baseUI/music-note";
 
 // 往上偏移的尺寸，露出圆角
 const OFFSET = 8;
@@ -27,6 +28,7 @@ function Singer() {
   const songScrollWrapper = useRef<HTMLDivElement>(null);
   const songScroll = useRef<ScrollHandle>(null);
   const header = useRef<HTMLDivElement>(null);
+  const musicNoteRef = useRef<MusicNoteHandle>(null);
 
   // 图片初始高度
   const initialHeight = useRef(0);
@@ -105,6 +107,10 @@ function Singer() {
     }
   }, []);
 
+  const musicAnimation = (x: number, y: number) => {
+    musicNoteRef.current?.startAnimation({ x, y });
+  };
+
   return (
     <CSSTransition
       in={showStatus}
@@ -137,10 +143,12 @@ function Singer() {
               songs={songs}
               showBackground={true}
               showCollect={false}
-            ></SongList>
+              musicAnimation={musicAnimation}
+            />
           </Scroll>
         </div>
         {loading ? <Loading /> : null}
+        <MusicNote ref={musicNoteRef} />
       </div>
     </CSSTransition>
   );

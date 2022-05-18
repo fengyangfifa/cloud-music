@@ -87,6 +87,10 @@ export interface ToastHandle {
   show: () => void;
 }
 
+export interface MusicNoteHandle {
+  startAnimation: ({ x, y }: { x: number; y: number }) => void;
+}
+
 export type BannerList = Array<BannerListItem>;
 export type RecommendList = Array<RecommendListItem>;
 export type SingerList = Array<SingerListItem>;

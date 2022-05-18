@@ -8,6 +8,7 @@ import Header from "@/baseUI/header";
 import Scroll from "@/baseUI/scroll";
 import Loading from "@/baseUI/loading";
 import SongList from "@/application/SongList";
+import MusicNote from "@/baseUI/music-note";
 import {
   getAlbumList,
   changeEnterLoading,
@@ -15,6 +16,7 @@ import {
 } from "./store/actionCreators";
 import { HEADER_HEIGHT } from "@/utils";
 import { RootState } from "@/store";
+import { MusicNoteHandle } from "@/types";
 import "./album.scss";
 
 function Album() {
@@ -27,6 +29,7 @@ function Album() {
   const [isMarquee, setIsMarquee] = useState(false); // 是否显示跑马灯
 
   const headerEl = useRef<HTMLDivElement>(null);
+  const musicNoteRef = useRef<MusicNoteHandle>(null);
 
   const { currentAlbum, enterLoading } = useSelector(
     (state: RootState) => state.album
@@ -58,6 +61,10 @@ function Album() {
       setTitle("歌单");
       setIsMarquee(false);
     }
+  };
+
+  const musicAnimation = (x: number, y: number) => {
+    musicNoteRef.current?.startAnimation({ x, y });
   };
 
   useEffect(() => {
@@ -162,10 +169,12 @@ function Album() {
               showCollect={true}
               songs={currentAlbum.tracks}
               showBackground={true}
+              musicAnimation={musicAnimation}
             />
           </div>
         </Scroll>
         {enterLoading ? <Loading /> : null}
+        <MusicNote ref={musicNoteRef} />
       </div>
     </CSSTransition>
   );

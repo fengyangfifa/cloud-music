@@ -1,6 +1,12 @@
 import React from "react";
 import clsx from "clsx";
+import { useDispatch } from "react-redux";
 
+import {
+  changePlayList,
+  changeCurrentIndex,
+  changeSequencePlayList
+} from "@/application/Player/store/actionCreators";
 import { getCount, getName } from "@/utils";
 import { TracksItem } from "@/types";
 import "./song-list.scss";
@@ -10,18 +16,36 @@ interface SongListProps {
   songs: Array<TracksItem>;
   showBackground?: boolean;
   collectCount?: number;
+  musicAnimation: (x: number, y: number) => void;
 }
 
 const SongList = React.forwardRef<HTMLDivElement, SongListProps>(
   (props, ref) => {
-    const { collectCount, showCollect, songs, showBackground } = props;
+    const { collectCount, showCollect, songs, showBackground, musicAnimation } =
+      props;
     const totalCount = songs.length;
+    const dispatch = useDispatch();
+
+    const changePlayListDispatch = (data: Array<TracksItem>) => {
+      dispatch(changePlayList(data));
+    };
+
+    const changeSequencePlayListDispatch = (data: Array<TracksItem>) => {
+      dispatch(changeSequencePlayList(data));
+    };
+
+    const changeCurrentIndexDispatch = (index: number) => {
+      dispatch(changeCurrentIndex(index));
+    };
 
     const selectItem = (
       e: React.MouseEvent<HTMLLIElement, MouseEvent>,
       index: number
     ) => {
-      console.log(index, e);
+      changePlayListDispatch(songs);
+      changeSequencePlayListDispatch(songs);
+      changeCurrentIndexDispatch(index);
+      musicAnimation(e.nativeEvent.clientX, e.nativeEvent.clientY);
     };
 
     const songList = (list: Array<TracksItem>) => {

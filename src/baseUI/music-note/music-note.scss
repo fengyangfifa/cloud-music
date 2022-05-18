@@ -1,0 +1,24 @@
+@import "../../assets/normal";
+
+
+.music-note-container {
+  .icon-wrapper {
+    display: none;
+
+    position: fixed;
+    z-index: 1000;
+
+    margin-top: -10px;
+    margin-left: -10px;
+
+    font-size: $font-size-m;
+
+    color: $theme-color;
+
+    transition: transform 1s cubic-bezier(0.62, -0.1, 0.86, 0.57);
+
+    > div {
+      transition: transform 1s;
+    }
+  }
+}
