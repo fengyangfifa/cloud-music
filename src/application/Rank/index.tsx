@@ -7,7 +7,7 @@ import Scroll from "@/baseUI/scroll";
 import Loading from "@/baseUI/loading";
 import { RootState } from "@/store";
 import { RankList, Tracks } from "@/types";
-import { filterIndex } from "@/utils";
+import { filterIndex, MINI_PLAYER_HEIGHT } from "@/utils";
 import style from "./rank.module.scss";
 import { renderRoutes, RouteConfigComponentProps } from "react-router-config";
 
@@ -16,6 +16,10 @@ function Rank(props: RouteConfigComponentProps) {
 
   const { rankList, loading } = useSelector((state: RootState) => {
     return state.rank;
+  });
+
+  const songsCount = useSelector((state: RootState) => {
+    return state.player.playList.length;
   });
 
   const globalIndex = filterIndex(rankList);
@@ -79,7 +83,10 @@ function Rank(props: RouteConfigComponentProps) {
   };
 
   return (
-    <div className={style.container}>
+    <div
+      className={style.container}
+      style={{ bottom: songsCount > 0 ? MINI_PLAYER_HEIGHT : 0 }}
+    >
       <Scroll>
         <div className={style["rank-container"]}>
           <h1 className={clsx(style.official, loading && style.hidden)}>

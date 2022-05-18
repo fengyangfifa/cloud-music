@@ -9,7 +9,7 @@ import Scroll from "@/baseUI/scroll";
 import Loading from "@/baseUI/loading";
 import { getBannerList, getRecommendList } from "./store/actionCreators";
 import { RootState } from "@/store";
-
+import { MINI_PLAYER_HEIGHT } from "@/utils";
 import style from "./recommend.module.scss";
 
 function Recommend(props: Partial<RouteConfigComponentProps>) {
@@ -18,6 +18,10 @@ function Recommend(props: Partial<RouteConfigComponentProps>) {
       return state.recommend;
     }
   );
+
+  const songsCount = useSelector((state: RootState) => {
+    return state.player.playList.length;
+  });
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -32,7 +36,10 @@ function Recommend(props: Partial<RouteConfigComponentProps>) {
   }, [dispatch, recommendList]);
 
   return (
-    <div className={style["content"]}>
+    <div
+      className={style["content"]}
+      style={{ bottom: songsCount > 0 ? MINI_PLAYER_HEIGHT : 0 }}
+    >
       <Scroll onScroll={forceCheck}>
         <div>
           <Slider bannerList={bannerList} />

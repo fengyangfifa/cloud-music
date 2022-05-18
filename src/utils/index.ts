@@ -321,3 +321,5 @@ export function shuffle(arr: Array<TracksItem>) {
 
   return new_arr;
 }
+
+export const MINI_PLAYER_HEIGHT = 60;

@@ -9,7 +9,7 @@ import Scroll from "@/baseUI/scroll";
 import SongList from "@/application/SongList";
 import Loading from "@/baseUI/loading";
 import { ScrollHandle, MusicNoteHandle } from "@/types";
-import { HEADER_HEIGHT } from "@/utils";
+import { HEADER_HEIGHT, MINI_PLAYER_HEIGHT } from "@/utils";
 import { getSingerInfo, changeEnterLoading } from "./store/actionCreators";
 import { RootState } from "@/store";
 import "./singer.scss";
@@ -41,6 +41,10 @@ function Singer() {
     loading
   } = useSelector((state: RootState) => {
     return state.singer;
+  });
+
+  const songsCount = useSelector((state: RootState) => {
+    return state.player.playList.length;
   });
 
   const setShowStatusFalse = () => {
@@ -120,7 +124,10 @@ function Singer() {
       unmountOnExit={true}
       onExited={history.goBack}
     >
-      <div className="singer">
+      <div
+        className="singer"
+        style={{ bottom: songsCount > 0 ? MINI_PLAYER_HEIGHT : 0 }}
+      >
         <Header
           title={artist.name}
           handleClick={setShowStatusFalse}

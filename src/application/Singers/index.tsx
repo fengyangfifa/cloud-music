@@ -5,7 +5,7 @@ import { forceCheck } from "react-lazyload";
 import { renderRoutes, RouteConfigComponentProps } from "react-router-config";
 
 import Horizon from "@/baseUI/horizon-item";
-import { categoryTypes, alphaTypes } from "@/utils";
+import { categoryTypes, alphaTypes, MINI_PLAYER_HEIGHT } from "@/utils";
 import Scroll from "@/baseUI/scroll";
 import {
   getHotSingerList,
@@ -33,6 +33,9 @@ function Singers(props: RouteConfigComponentProps) {
     enterLoading
   } = useSelector((state: RootState) => {
     return state.singers;
+  });
+  const songsCount = useSelector((state: RootState) => {
+    return state.player.playList.length;
   });
   const dispatch = useDispatch();
 
@@ -114,7 +117,10 @@ function Singers(props: RouteConfigComponentProps) {
 
   return (
     <>
-      <div className={style["nav-container"]}>
+      <div
+        className={style["nav-container"]}
+        style={{ bottom: songsCount > 0 ? MINI_PLAYER_HEIGHT : 0 }}
+      >
         <Horizon
           list={categoryTypes}
           title="分类 (默认热门):"

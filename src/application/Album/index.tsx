@@ -14,7 +14,7 @@ import {
   changeEnterLoading,
   changeCurrentAlbum
 } from "./store/actionCreators";
-import { HEADER_HEIGHT } from "@/utils";
+import { HEADER_HEIGHT, MINI_PLAYER_HEIGHT } from "@/utils";
 import { RootState } from "@/store";
 import { MusicNoteHandle } from "@/types";
 import "./album.scss";
@@ -33,6 +33,10 @@ function Album() {
 
   const { currentAlbum, enterLoading } = useSelector(
     (state: RootState) => state.album
+  );
+
+  const songsCount = useSelector(
+    (state: RootState) => state.player.playList.length
   );
 
   const handleBack = () => {
@@ -153,7 +157,10 @@ function Album() {
       unmountOnExit={true}
       onExited={history.goBack}
     >
-      <div className="container">
+      <div
+        className="container"
+        style={{ bottom: songsCount > 0 ? MINI_PLAYER_HEIGHT : 0 }}
+      >
         <Header
           ref={headerEl}
           title={title}
