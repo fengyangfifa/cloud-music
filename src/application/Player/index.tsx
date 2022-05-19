@@ -140,7 +140,7 @@ function Player() {
     }
   };
 
-  const handleLoop = () => {
+  const handleLoop = useCallback(() => {
     if (!audioRef.current) {
       return;
     }
@@ -150,7 +150,7 @@ function Player() {
     audioRef.current.play().catch(() => {
       togglePlayingDispatch(false);
     });
-  };
+  }, [togglePlayingDispatch]);
 
   const changeMode = () => {
     const newMode = (mode + 1) % 3;
@@ -178,49 +178,69 @@ function Player() {
     toastRef.current?.show();
   };
 
-  const handlePrev = () => {
-    // 播放列表只有一首歌时单曲循环
-    if (playList.length === 1 || mode === PlayMode.loop) {
-      handleLoop();
-      return;
-    }
+  const handlePrev = useCallback(
+    (currentIndex) => {
+      // 播放列表只有一首歌时单曲循环
+      if (playList.length === 1 || mode === PlayMode.loop) {
+        handleLoop();
+        return;
+      }
 
-    let index = currentIndex - 1;
-    if (index < 0) {
-      index = playList.length - 1;
-    }
+      let index = currentIndex - 1;
+      if (index < 0) {
+        index = playList.length - 1;
+      }
 
-    if (!playing) {
-      togglePlayingDispatch(true);
-    }
+      if (!playing) {
+        togglePlayingDispatch(true);
+      }
 
-    changeCurrentIndexDispatch(index);
-  };
+      changeCurrentIndexDispatch(index);
+    },
+    [
+      changeCurrentIndexDispatch,
+      handleLoop,
+      mode,
+      playList.length,
+      playing,
+      togglePlayingDispatch
+    ]
+  );
 
-  const handleNext = () => {
-    // 播放列表只有一首歌时单曲循环
-    if (playList.length === 1 || mode === PlayMode.loop) {
-      handleLoop();
-      return;
-    }
+  const handleNext = useCallback(
+    (currentIndex: number) => {
+      // 播放列表只有一首歌时单曲循环
+      if (playList.length === 1 || mode === PlayMode.loop) {
+        handleLoop();
+        return;
+      }
 
-    let index = currentIndex + 1;
-    if (index === playList.length) {
-      index = 0;
-    }
+      let index = currentIndex + 1;
+      if (index === playList.length) {
+        index = 0;
+      }
 
-    if (!playing) {
-      togglePlayingDispatch(true);
-    }
+      if (!playing) {
+        togglePlayingDispatch(true);
+      }
 
-    changeCurrentIndexDispatch(index);
-  };
+      changeCurrentIndexDispatch(index);
+    },
+    [
+      changeCurrentIndexDispatch,
+      handleLoop,
+      mode,
+      playList.length,
+      playing,
+      togglePlayingDispatch
+    ]
+  );
 
-  const handleEnd = () => {
+  const handleEnd = (index: number) => {
     if (mode === PlayMode.loop) {
       handleLoop();
     } else {
-      handleNext();
+      handleNext(index);
     }
   };
 
@@ -243,6 +263,7 @@ function Player() {
           fullScreen={fullScreen}
           playing={playing}
           currentTime={currentTime}
+          currentIndex={currentIndex}
           duration={duration}
           percent={percent}
           toggleFullScreen={toggleFullScreenDispatch}
@@ -253,7 +274,11 @@ function Player() {
           changeMode={changeMode}
         />
       ) : null}
-      <audio ref={audioRef} onTimeUpdate={updateTime} onEnded={handleEnd} />
+      <audio
+        ref={audioRef}
+        onTimeUpdate={updateTime}
+        onEnded={() => handleEnd(currentIndex + 1)}
+      />
       <Toast text={modeText} ref={toastRef} />
     </div>
   );

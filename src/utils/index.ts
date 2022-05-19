@@ -219,7 +219,7 @@ export const getCount = (count: number) => {
 };
 
 export const debounce = (func: Function = () => {}, delay: number) => {
-  let timer: number;
+  let timer: number | undefined;
 
   return (...args: unknown[]) => {
     if (timer) {
@@ -228,6 +228,22 @@ export const debounce = (func: Function = () => {}, delay: number) => {
     timer = window.setTimeout(() => {
       func.apply(this, args);
       window.clearTimeout(timer);
+      timer = undefined;
+    }, delay);
+  };
+};
+
+export const throttle = (func: Function = () => {}, delay: number) => {
+  let timer: number | undefined;
+
+  return (...args: unknown[]) => {
+    if (timer !== undefined) {
+      return;
+    }
+    timer = window.setTimeout(() => {
+      func.apply(this, args);
+      window.clearTimeout(timer);
+      timer = undefined;
     }, delay);
   };
 };

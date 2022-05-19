@@ -1,8 +1,8 @@
-import React, { useRef } from "react";
+import React, { useCallback, useRef } from "react";
 import { CSSTransition } from "react-transition-group";
 import animations from "create-keyframe-animation";
 
-import { formatPlayTime, getName } from "@/utils";
+import { formatPlayTime, getName, throttle } from "@/utils";
 import { PlayMode, ProgressBarHandle, TracksItem } from "@/types";
 import ProgressBar from "@/baseUI/progress-bar";
 import "./normal-player.scss";
@@ -14,6 +14,7 @@ interface NormalPlayerProps {
   percent: number;
   duration: number;
   currentTime: number;
+  currentIndex: number;
   mode: PlayMode;
   toggleFullScreen: (data: boolean) => void;
   clickPlaying: (
@@ -21,8 +22,8 @@ interface NormalPlayerProps {
     state: boolean
   ) => void;
   onProgressChange: (percent: number) => void;
-  handlePrev: () => void;
-  handleNext: () => void;
+  handlePrev: (index: number) => void;
+  handleNext: (index: number) => void;
   changeMode: () => void;
 }
 
@@ -147,6 +148,7 @@ function NormalPlayer(props: NormalPlayerProps) {
     currentTime,
     percent,
     mode,
+    currentIndex,
     clickPlaying,
     toggleFullScreen,
     onProgressChange,
@@ -154,6 +156,11 @@ function NormalPlayer(props: NormalPlayerProps) {
     handleNext,
     changeMode
   } = props;
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const onHandlePrev = useCallback(throttle(handlePrev, 200), [handlePrev]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const onHandleNext = useCallback(throttle(handleNext, 200), [handleNext]);
 
   const getPlayMode = () => {
     let content: string;
@@ -228,7 +235,10 @@ function NormalPlayer(props: NormalPlayerProps) {
                 dangerouslySetInnerHTML={{ __html: getPlayMode() }}
               />
             </div>
-            <div className="icon i-left" onClick={handlePrev}>
+            <div
+              className="icon i-left"
+              onClick={() => onHandlePrev(currentIndex)}
+            >
               <i className="iconfont">&#xe6e1;</i>
             </div>
             <div className="icon i-center">
@@ -240,7 +250,10 @@ function NormalPlayer(props: NormalPlayerProps) {
                 }}
               />
             </div>
-            <div className="icon i-right" onClick={handleNext}>
+            <div
+              className="icon i-right"
+              onClick={() => onHandleNext(currentIndex)}
+            >
               <i className="iconfont">&#xe718;</i>
             </div>
             <div className="icon i-right">
