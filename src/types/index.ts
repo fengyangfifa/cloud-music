@@ -91,6 +91,10 @@ export interface MusicNoteHandle {
   startAnimation: ({ x, y }: { x: number; y: number }) => void;
 }
 
+export interface ConfirmHandle {
+  show: () => void;
+}
+
 export type BannerList = Array<BannerListItem>;
 export type RecommendList = Array<RecommendListItem>;
 export type SingerList = Array<SingerListItem>;

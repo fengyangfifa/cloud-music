@@ -1,0 +1,93 @@
+@import "../../assets/normal";
+
+
+@keyframes confirm-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes confirm-zoom {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.confirm-wrapper {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 1000;
+
+  background: $background-color-shadow;
+
+  &.confirm-fade-enter-active {
+    animation-name: confirm-fade-in;
+    animation-duration: 0.3s;
+
+    .confirm-content {
+      animation-name: confirm-zoom;
+      animation-duration: 0.3s;
+    }
+  }
+
+  > div {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 100;
+
+    transform: translate(-50%, -50%);
+
+    .confirm-content {
+      width: 270px;
+      border-radius: 13px;
+
+      background: $highlight-background-color;
+
+      .text {
+        padding: 19px 15px;
+
+        font-size: $font-size-l;
+        line-height: 22px;
+        text-align: center;
+
+        color: $font-color-desc-v2;
+      }
+
+      .operate {
+        display: flex;
+        align-items: center;
+
+        font-size: $font-size-l;
+        text-align: center;
+
+        &-btn {
+          flex: 1;
+
+          padding: 10px 0;
+          border-top: 1px solid $border-color;
+
+          line-height: 22px;
+
+          color: $font-color-desc;
+
+          &.left {
+            border-right: 1px solid $border-color;
+          }
+        }
+      }
+    }
+  }
+}
