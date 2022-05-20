@@ -21,3 +21,6 @@ export type SET_CURRENT_INDEX_TYPE = typeof SET_CURRENT_INDEX;
 
 export const SET_SHOW_PLAYLIST = "player/SET_SHOW_PLAYLIST";
 export type SET_SHOW_PLAYLIST_TYPE = typeof SET_SHOW_PLAYLIST;
+
+export const DELETE_SONG = "player/DELETE_SONG";
+export type DELETE_SONG_TYPE = typeof DELETE_SONG;

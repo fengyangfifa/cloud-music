@@ -1,4 +1,6 @@
 import {
+  DELETE_SONG,
+  DELETE_SONG_TYPE,
   SET_CURRENT_INDEX,
   SET_CURRENT_INDEX_TYPE,
   SET_CURRENT_SONG,
@@ -55,4 +57,8 @@ export const changeCurrentIndex = (data: number) => {
 
 export const changeShowPlayList = (data: boolean) => {
   return createAction<SET_SHOW_PLAYLIST_TYPE, boolean>(SET_SHOW_PLAYLIST, data);
+};
+
+export const deleteSong = (data: TracksItem) => {
+  return createAction<DELETE_SONG_TYPE, TracksItem>(DELETE_SONG, data);
 };

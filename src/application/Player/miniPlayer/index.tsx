@@ -16,11 +16,22 @@ interface MiniPlayerProps {
     e: React.MouseEvent<HTMLElement, MouseEvent>,
     state: boolean
   ) => void;
+  toggleShowPlayList: (
+    e: React.MouseEvent<HTMLElement, MouseEvent>,
+    data: boolean
+  ) => void;
 }
 
 function MiniPlayer(props: MiniPlayerProps) {
-  const { song, fullScreen, playing, percent, toggleFullScreen, clickPlaying } =
-    props;
+  const {
+    song,
+    fullScreen,
+    playing,
+    percent,
+    toggleFullScreen,
+    clickPlaying,
+    toggleShowPlayList
+  } = props;
 
   const miniPlayerRef = useRef<HTMLDivElement>(null);
 
@@ -76,7 +87,7 @@ function MiniPlayer(props: MiniPlayerProps) {
             />
           </ProgressCircle>
         </div>
-        <div className="control">
+        <div className="control" onClick={(e) => toggleShowPlayList(e, true)}>
           <i className="iconfont">&#xe640;</i>
         </div>
       </div>

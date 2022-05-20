@@ -25,6 +25,10 @@ interface NormalPlayerProps {
   handlePrev: (index: number) => void;
   handleNext: (index: number) => void;
   changeMode: () => void;
+  toggleShowPlayList: (
+    e: React.MouseEvent<HTMLElement, MouseEvent>,
+    data: boolean
+  ) => void;
 }
 
 function NormalPlayer(props: NormalPlayerProps) {
@@ -154,7 +158,8 @@ function NormalPlayer(props: NormalPlayerProps) {
     onProgressChange,
     handlePrev,
     handleNext,
-    changeMode
+    changeMode,
+    toggleShowPlayList
   } = props;
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -256,7 +261,12 @@ function NormalPlayer(props: NormalPlayerProps) {
             >
               <i className="iconfont">&#xe718;</i>
             </div>
-            <div className="icon i-right">
+            <div
+              className="icon i-right"
+              onClick={(e) => {
+                toggleShowPlayList(e, true);
+              }}
+            >
               <i className="iconfont">&#xe640;</i>
             </div>
           </div>

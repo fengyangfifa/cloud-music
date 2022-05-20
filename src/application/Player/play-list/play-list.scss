@@ -1,0 +1,150 @@
+@import "../../../assets/normal";
+
+.play-list-wrapper {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 1000;
+
+  background-color: $background-color-shadow;
+
+  &.list-fade-enter {
+    opacity: 0;
+  }
+
+  &.list-fade-enter-active {
+    opacity: 1;
+    transition: all 0.3s;
+  }
+
+  &.list-fade-exit {
+    opacity: 1;
+  }
+
+  &.list-fade-exit-active {
+    opacity: 0;
+    transition: all 0.3s;
+  }
+
+  .list-wrapper {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+
+    width: 100%;
+    border-radius: 10px 10px 0 0;
+
+    background-color: $highlight-background-color;
+
+    opacity: 1;
+
+    transform: translate3d(0, 0, 0);
+
+    .list-header {
+      position: relative;
+
+      padding: 20px 30px 10px 20px;
+
+      .title {
+        display: flex;
+        align-items: center;
+
+        > div {
+          flex: 1;
+
+          .text {
+            flex: 1;
+
+            font-size: $font-size-m;
+
+            color: $font-color-desc;
+          }
+        }
+
+        .iconfont {
+          margin-right: 10px;
+
+          font-size: $font-size-ll;
+
+          color: $theme-color;
+        }
+
+        .clear {
+          @include extend-click;
+
+          font-size: $font-size-l;
+        }
+      }
+    }
+
+    .list-close {
+      font-size: $font-size-l;
+      line-height: 50px;
+      text-align: center;
+
+      color: $font-color-desc;
+      background: $background-color;
+    }
+
+    .scroll-wrapper {
+      overflow: hidden;
+
+      height: 400px;
+
+      .list-content {
+        .item {
+          display: flex;
+          align-items: center;
+          overflow: hidden;
+
+          height: 40px;
+          padding: 0 30px 0 20px;
+
+          .current {
+            flex: 0 0 20px;
+
+            width: 20px;
+
+            font-size: $font-size-s;
+
+            color: $theme-color;
+          }
+
+          .text {
+            @include no-wrap;
+
+            flex: 1;
+
+            font-size: $font-size-m;
+
+            color: $font-color-desc-v2;
+
+            .icon-favorite {
+              color: $theme-color;
+            }
+          }
+
+          .like {
+            @include extend-click;
+
+            margin-right: 15px;
+
+            font-size: $font-size-m;
+
+            color: $theme-color;
+          }
+
+          .delete {
+            @include extend-click;
+
+            font-size: $font-size-s;
+
+            color: $theme-color;
+          }
+        }
+      }
+    }
+  }
+}

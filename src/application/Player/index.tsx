@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import MiniPlayer from "./miniPlayer";
 import NormalPlayer from "./normalPlayer";
+import PlayList from "./play-list";
 import Toast from "@/baseUI/toast";
 import { RootState } from "@/store";
 import { findIndex, getSongUrl, shuffle } from "@/utils";
@@ -12,7 +13,8 @@ import {
   changeFullScreen,
   changePlayingState,
   changePlayList,
-  changePlayMode
+  changePlayMode,
+  changeShowPlayList
 } from "./store/actionCreators";
 import { PlayMode, ToastHandle, TracksItem } from "@/types";
 
@@ -75,6 +77,14 @@ function Player() {
   const changePlayListDispatch = useCallback(
     (data: Array<TracksItem>) => {
       dispatch(changePlayList(data));
+    },
+    [dispatch]
+  );
+
+  const toggleShowPlayListDispatch = useCallback(
+    (e: React.MouseEvent<HTMLElement, MouseEvent>, data: boolean) => {
+      dispatch(changeShowPlayList(data));
+      e.stopPropagation();
     },
     [dispatch]
   );
@@ -254,6 +264,7 @@ function Player() {
           percent={percent}
           toggleFullScreen={toggleFullScreenDispatch}
           clickPlaying={clickPlaying}
+          toggleShowPlayList={toggleShowPlayListDispatch}
         />
       ) : null}
       {sequencePlayList.length > 0 ? (
@@ -272,6 +283,7 @@ function Player() {
           handlePrev={handlePrev}
           handleNext={handleNext}
           changeMode={changeMode}
+          toggleShowPlayList={toggleShowPlayListDispatch}
         />
       ) : null}
       <audio
@@ -279,6 +291,7 @@ function Player() {
         onTimeUpdate={updateTime}
         onEnded={() => handleEnd(currentIndex + 1)}
       />
+      <PlayList />
       <Toast text={modeText} ref={toastRef} />
     </div>
   );

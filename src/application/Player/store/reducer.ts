@@ -8,9 +8,11 @@ import {
   SET_PLAYLIST,
   SET_SEQUENCE_PLAYLIST,
   SET_PLAYING_STATE,
-  SET_FULL_SCREEN
+  SET_FULL_SCREEN,
+  DELETE_SONG
 } from "./constants";
 import { PlayMode, TracksItem } from "@/types";
+import { findIndex } from "@/utils";
 
 export interface PlayerState {
   fullScreen: boolean;
@@ -32,6 +34,20 @@ const defaultState: PlayerState = {
   currentIndex: -1,
   showPlayList: false,
   currentSong: { id: 0, name: "", dt: 0 }
+};
+
+const handleDeleteSong = (state: PlayerState, song: TracksItem) => {
+  let { playList, sequencePlayList, currentIndex } = state;
+  const pIndex = findIndex(song, playList);
+  playList.splice(pIndex, 1);
+
+  // 如果删除的歌曲排在当前播放歌曲前面，那么 currentIndex--，让当前的歌正常播放
+  if (pIndex < currentIndex) {
+    state.currentIndex -= 1;
+  }
+
+  const sIndex = findIndex(song, sequencePlayList);
+  sequencePlayList.splice(sIndex, 1);
 };
 
 const playerReducer = produce((state, action) => {
@@ -62,6 +78,9 @@ const playerReducer = produce((state, action) => {
       break;
     case SET_SHOW_PLAYLIST:
       state.showPlayList = action.data;
+      break;
+    case DELETE_SONG:
+      handleDeleteSong(state, action.data);
       break;
   }
 }, defaultState);
