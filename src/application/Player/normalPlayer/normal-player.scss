@@ -177,6 +177,42 @@
         color: rgba(255, 255, 255, 0.5);
       }
     }
+
+    .lyric-container {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+
+      .lyric-wrapper {
+        position: absolute;
+        left: 0;
+        right: 0;
+
+        width: 100%;
+        box-sizing: border-box;
+
+        text-align: center;
+
+        p {
+          font-size: $font-size-l;
+          line-height: 32px;
+          white-space: normal;
+
+          color: rgba(255, 255, 255, 0.5);
+
+          &.current {
+            color: #ffffff;
+          }
+
+          &.pure {
+            position: relative;
+            top: 30vh;
+          }
+        }
+      }
+    }
   }
 
   .bottom {

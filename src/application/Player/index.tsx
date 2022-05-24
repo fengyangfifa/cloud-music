@@ -17,6 +17,13 @@ import {
   changeShowPlayList
 } from "./store/actionCreators";
 import { PlayMode, ToastHandle, TracksItem } from "@/types";
+import { getLyricRequest } from "@/api/request";
+import LyricParser from "@/utils/lyric-parser";
+
+enum AudioState {
+  NO_START = 0,
+  STARTED = 1
+}
 
 function Player() {
   const dispatch = useDispatch();
@@ -38,8 +45,12 @@ function Player() {
   // 歌曲播放进度
   const [preSong, setPreSong] = useState({ id: 0 });
   const [modeText, setModeText] = useState("");
+  const [currentPlayingLyric, setPlayingLyric] = useState("");
+  const [currentLineNum, setCurrentLineNum] = useState(0);
   const toastRef = useRef<ToastHandle>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
+  const currentLyric = useRef<LyricParser | null>(null);
+  const audioStateRef = useRef(AudioState.NO_START);
   const percent = isNaN(currentTime / duration) ? 0 : currentTime / duration;
 
   const changeCurrentDispatch = useCallback(
@@ -89,6 +100,31 @@ function Player() {
     [dispatch]
   );
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const getLyric = (id: number) => {
+    let lyric: string;
+    currentLyric.current?.stop();
+    currentLyric.current = null;
+
+    getLyricRequest(id).then((res) => {
+      lyric = res.data.lrc.lyric;
+      if (!lyric) {
+        currentLyric.current = null;
+        return;
+      }
+
+      currentLyric.current = new LyricParser(lyric, handleLyric);
+      if (audioStateRef.current === AudioState.STARTED) {
+        currentLyric.current?.seek(currentTime * 1000);
+      }
+    });
+  };
+
+  const handleLyric = ({ lineNum, txt }: { lineNum: number; txt: string }) => {
+    setCurrentLineNum(lineNum);
+    setPlayingLyric(txt);
+  };
+
   useEffect(() => {
     if (!playList.length || currentIndex === -1 || !playList[currentIndex]) {
       return;
@@ -98,32 +134,60 @@ function Player() {
     changeCurrentDispatch(current);
   }, [changeCurrentDispatch, currentIndex, playList]);
 
+  const playAudio = useCallback(
+    (offset = 0) => {
+      audioRef.current
+        ?.play()
+        .then(() => {
+          if (audioStateRef.current === AudioState.NO_START) {
+            audioStateRef.current = AudioState.STARTED;
+            currentLyric.current?.play();
+          } else {
+            currentLyric.current?.play(offset, true);
+          }
+        })
+        .catch(() => {
+          console.log("？？？？");
+          togglePlayingDispatch(false);
+        });
+    },
+    [togglePlayingDispatch]
+  );
+
+  const pauseAudio = useCallback(() => {
+    audioRef.current?.pause();
+    currentLyric.current?.stop();
+  }, []);
+
   useEffect(() => {
     if (!currentSong || currentSong.id === preSong.id || !audioRef.current) {
       return;
     }
 
+    audioStateRef.current = AudioState.NO_START;
+    getLyric(currentSong.id);
     setPreSong(currentSong);
     audioRef.current.src = getSongUrl(currentSong.id);
     if (playing) {
-      audioRef.current.play().catch(() => {
-        togglePlayingDispatch(false);
-      });
+      playAudio();
     }
 
-    setCurrentTime(0);
     setDuration(currentSong.dt / 1000);
-  }, [currentSong, playing, preSong.id, togglePlayingDispatch]);
+  }, [currentSong, getLyric, playAudio, playing, preSong.id]);
 
   useEffect(() => {
     if (playing) {
-      audioRef.current?.play().catch(() => {
-        togglePlayingDispatch(false);
-      });
+      if (!audioRef.current?.paused) {
+        return;
+      }
+
+      playAudio(currentTime * 1000);
     } else {
-      audioRef.current?.pause();
+      if (audioStateRef.current !== AudioState.NO_START) {
+        pauseAudio();
+      }
     }
-  }, [playing, togglePlayingDispatch]);
+  }, [currentTime, pauseAudio, playAudio, playing, togglePlayingDispatch]);
 
   const clickPlaying = (
     e: React.MouseEvent<HTMLElement, MouseEvent>,
@@ -147,6 +211,10 @@ function Player() {
     audioRef.current.currentTime = nowTime;
     if (!playing) {
       togglePlayingDispatch(true);
+    }
+
+    if (currentLyric.current) {
+      currentLyric.current?.seek(nowTime * 1000);
     }
   };
 
@@ -201,6 +269,10 @@ function Player() {
         index = playList.length - 1;
       }
 
+      setCurrentTime(0);
+      setCurrentLineNum(0);
+      setPlayingLyric("");
+
       if (!playing) {
         togglePlayingDispatch(true);
       }
@@ -229,6 +301,10 @@ function Player() {
       if (index === playList.length) {
         index = 0;
       }
+
+      setCurrentTime(0);
+      setCurrentLineNum(0);
+      setPlayingLyric("");
 
       if (!playing) {
         togglePlayingDispatch(true);
@@ -277,6 +353,9 @@ function Player() {
           currentIndex={currentIndex}
           duration={duration}
           percent={percent}
+          currentLyric={currentLyric.current}
+          currentPlayingLyric={currentPlayingLyric}
+          currentLineNum={currentLineNum}
           toggleFullScreen={toggleFullScreenDispatch}
           clickPlaying={clickPlaying}
           onProgressChange={onProgressChange}
@@ -289,7 +368,7 @@ function Player() {
       <audio
         ref={audioRef}
         onTimeUpdate={updateTime}
-        onEnded={() => handleEnd(currentIndex + 1)}
+        onEnded={() => handleEnd(currentIndex)}
       />
       <PlayList />
       <Toast text={modeText} ref={toastRef} />

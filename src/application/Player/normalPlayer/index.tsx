@@ -1,10 +1,12 @@
-import React, { useCallback, useRef } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { CSSTransition } from "react-transition-group";
 import animations from "create-keyframe-animation";
 
 import { formatPlayTime, getName, throttle } from "@/utils";
-import { PlayMode, ProgressBarHandle, TracksItem } from "@/types";
+import { PlayMode, ProgressBarHandle, TracksItem, ScrollHandle } from "@/types";
+import LyricParser from "@/utils/lyric-parser";
 import ProgressBar from "@/baseUI/progress-bar";
+import Scroll from "@/baseUI/scroll";
 import "./normal-player.scss";
 
 interface NormalPlayerProps {
@@ -16,6 +18,9 @@ interface NormalPlayerProps {
   currentTime: number;
   currentIndex: number;
   mode: PlayMode;
+  currentLyric: LyricParser | null;
+  currentPlayingLyric: string;
+  currentLineNum: number;
   toggleFullScreen: (data: boolean) => void;
   clickPlaying: (
     e: React.MouseEvent<HTMLElement, MouseEvent>,
@@ -35,6 +40,11 @@ function NormalPlayer(props: NormalPlayerProps) {
   const normalPlayerRef = useRef<HTMLDivElement>(null);
   const cdWrapperRef = useRef<HTMLDivElement>(null);
   const progressRef = useRef<ProgressBarHandle>(null);
+  const [currentState, setCurrentState] = useState("");
+  const lyricScrollRef = useRef<ScrollHandle>(null);
+  const lyricLineRefs = useRef<Array<React.RefObject<HTMLParagraphElement>>>(
+    []
+  );
 
   // 计算偏移的辅助函数
   const _getPosAndScale = () => {
@@ -153,6 +163,9 @@ function NormalPlayer(props: NormalPlayerProps) {
     percent,
     mode,
     currentIndex,
+    currentLineNum,
+    currentLyric,
+    currentPlayingLyric,
     clickPlaying,
     toggleFullScreen,
     onProgressChange,
@@ -163,9 +176,9 @@ function NormalPlayer(props: NormalPlayerProps) {
   } = props;
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const onHandlePrev = useCallback(throttle(handlePrev, 200), [handlePrev]);
+  const onHandlePrev = useCallback(throttle(handlePrev, 500), [handlePrev]);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const onHandleNext = useCallback(throttle(handleNext, 200), [handleNext]);
+  const onHandleNext = useCallback(throttle(handleNext, 500), [handleNext]);
 
   const getPlayMode = () => {
     let content: string;
@@ -180,6 +193,32 @@ function NormalPlayer(props: NormalPlayerProps) {
 
     return content;
   };
+
+  const toggleCurrentState = () => {
+    if (currentState !== "lyric") {
+      setCurrentState("lyric");
+    } else {
+      setCurrentState("");
+    }
+  };
+
+  useEffect(() => {
+    if (!lyricLineRefs.current || !lyricScrollRef.current) {
+      return;
+    }
+
+    const bScroll = lyricScrollRef.current.getBScroll();
+    if (currentLineNum > 5) {
+      // 保持当前歌词在第 5 条的位置
+      const lineEl = lyricLineRefs.current[currentLineNum - 5].current;
+      if (lineEl) {
+        bScroll?.scrollToElement(lineEl, 1000, false, false);
+      }
+    } else {
+      // 当前歌词行数 <=5, 直接滚动到最顶端
+      bScroll?.scrollTo(0, 0, 1000);
+    }
+  }, [currentLineNum]);
 
   return (
     <CSSTransition
@@ -210,16 +249,61 @@ function NormalPlayer(props: NormalPlayerProps) {
           <h1 className="title">{song.name}</h1>
           <h1 className="subtitle">{getName(song.ar || [])}</h1>
         </div>
-        <div className="middle" ref={cdWrapperRef}>
-          <div className="cd-wrapper">
-            <div className="cd">
-              <img
-                className={`image play ${!playing ? "pause" : ""}`}
-                src={song.al?.picUrl + "?param=400x400"}
-                alt=""
-              />
+        <div className="middle" ref={cdWrapperRef} onClick={toggleCurrentState}>
+          <CSSTransition
+            timeout={400}
+            classNames="fade"
+            in={currentState !== "lyric"}
+          >
+            <div className="cd-wrapper">
+              <div className="cd">
+                <img
+                  className={`image play ${!playing ? "pause" : ""}`}
+                  src={song.al?.picUrl + "?param=400x400"}
+                  alt=""
+                />
+              </div>
+              {currentState !== "lyric" && (
+                <p className="playing-lyric">{currentPlayingLyric}</p>
+              )}
             </div>
-          </div>
+          </CSSTransition>
+          <CSSTransition
+            timeout={400}
+            classNames="fade"
+            in={currentState === "lyric"}
+          >
+            <div className="lyric-container">
+              <Scroll ref={lyricScrollRef}>
+                <div
+                  className="lyric-wrapper"
+                  style={{
+                    visibility: currentState === "lyric" ? "visible" : "hidden"
+                  }}
+                >
+                  {currentLyric ? (
+                    currentLyric.lines.map((item, index) => {
+                      lyricLineRefs.current[index] = React.createRef();
+
+                      return (
+                        <p
+                          className={`text ${
+                            currentLineNum === index ? "current" : ""
+                          }`}
+                          key={item.time + index}
+                          ref={lyricLineRefs.current[index]}
+                        >
+                          {item.txt}
+                        </p>
+                      );
+                    })
+                  ) : (
+                    <p className="text pure">纯音乐，请欣赏。</p>
+                  )}
+                </div>
+              </Scroll>
+            </div>
+          </CSSTransition>
         </div>
         <div className="bottom">
           <div className="progress-wrapper">

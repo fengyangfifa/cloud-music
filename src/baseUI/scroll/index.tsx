@@ -138,9 +138,7 @@ const Scroll = forwardRef<ScrollHandle, ScrollProps>((props, ref) => {
     },
 
     getBScroll() {
-      if (bScroll) {
-        return bScroll;
-      }
+      return bScroll;
     }
   }));
 

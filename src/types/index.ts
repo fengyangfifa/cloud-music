@@ -1,3 +1,5 @@
+import BScroll from "better-scroll";
+
 interface BannerListItem {
   imageUrl: string;
 }
@@ -58,7 +60,7 @@ export interface AlbumType {
 
 export interface ScrollHandle {
   refresh: () => void;
-  getBScroll: () => void;
+  getBScroll: () => BScroll | undefined;
 }
 
 export interface ArtistType {
@@ -93,6 +95,12 @@ export interface MusicNoteHandle {
 
 export interface ConfirmHandle {
   show: () => void;
+}
+
+export interface Lyric {
+  lrc: {
+    lyric: string;
+  };
 }
 
 export type BannerList = Array<BannerListItem>;
