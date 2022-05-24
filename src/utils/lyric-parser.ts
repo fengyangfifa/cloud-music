@@ -116,7 +116,8 @@ class Lyric {
     }
 
     this.timer = window.setTimeout(() => {
-      this._callHandler(this.curLineIndex++);
+      this._callHandler(this.curLineIndex);
+      this.curLineIndex += 1;
 
       if (
         this.curLineIndex < this.lines.length &&
