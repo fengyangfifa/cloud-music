@@ -161,6 +161,7 @@
     ]
   },
   "devDependencies": {
+    "@types/create-keyframe-animation": "^0.1.0",
     "@types/react-lazyload": "^3.2.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
