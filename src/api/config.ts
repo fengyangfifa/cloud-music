@@ -1,9 +1,12 @@
 import axios from "axios";
 
+console.log(axios.extendVersion);
+
 export const baseUrl = "http://localhost:4000";
 
 const axiosInstance = axios.create({
-  baseURL: baseUrl
+  baseURL: baseUrl,
+  loading: true
 });
 
 axiosInstance.interceptors.response.use(
